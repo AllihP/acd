@@ -1,0 +1,39 @@
+/* ═══════════════════════════════════════════════════════════════
+   ACD — Custom Admin CSS  |  Couleurs : Navy #0C1931 · Green #6AAB2E · Gold #C9A84C
+   Ciblé pour django-unfold (Tailwind CSS)
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --acd-navy:  #0C1931;
+  --acd-blue:  #3A5F8A;
+  --acd-green: #6AAB2E;
+  --acd-gold:  #C9A84C;
+  --acd-cream: #F5F2ED;
+}
+
+/* ── TYPOGRAPHIE ── */
+body,
+input, select, textarea, button {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* ── PAGE LOGIN ── */
+#login-form h1 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--acd-navy);
+}
+
+/* ── BADGES CATÉGORIES (injectés via format_html dans admin.py) ── */
+/* Les styles sont inline dans admin.py, rien à surcharger ici */
+
+/* ── APERÇUS IMAGE ── */
+img[style*="height:70px"] {
+  border: 2px solid rgba(58, 95, 138, 0.15);
+}
+
+/* ── ÉTOILES NOTATION ── */
+span[style*="color:#C9A84C"] {
+  letter-spacing: 2px;
+}

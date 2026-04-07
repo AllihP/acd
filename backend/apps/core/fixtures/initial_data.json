@@ -1,0 +1,122 @@
+[
+  {
+    "model": "core.sitesettings",
+    "pk": 1,
+    "fields": {
+      "topbar_fr": "ACD — Agence de Communication pour le Développement",
+      "topbar_en": "ACD — Agency for Communication and Development",
+      "topbar_ar": "وكالة الاتصال من أجل التنمية — إنجامينا، تشاد",
+      "email": "contact@acd-tchad.com",
+      "phone": "+235 66 00 00 00",
+      "address_fr": "Avenue Charles de Gaulle, N'Djamena, Tchad",
+      "address_en": "Charles de Gaulle Avenue, N'Djamena, Chad",
+      "address_ar": "شارع شارل ديغول، إنجامينا، تشاد",
+      "facebook": "https://facebook.com/",
+      "linkedin": "https://linkedin.com/",
+      "twitter": "",
+      "instagram": "https://instagram.com/",
+      "youtube": "",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.herosection",
+    "pk": 1,
+    "fields": {
+      "label_fr": "Agence 360° — N'Djamena, Tchad",
+      "label_en": "360° Agency — N'Djamena, Chad",
+      "label_ar": "وكالة 360° — إنجامينا، تشاد",
+      "title_fr": "Communication. Stratégie. Impact.",
+      "title_en": "Communication. Strategy. Impact.",
+      "title_ar": "التواصل. الاستراتيجية. الأثر.",
+      "subtitle_fr": "Nous bâtissons des marques qui inspirent, des stratégies qui transforment et des campagnes qui laissent une empreinte durable au Tchad et en Afrique.",
+      "subtitle_en": "We build brands that inspire, strategies that transform, and campaigns that leave a lasting mark across Chad and Africa.",
+      "subtitle_ar": "نبني علامات تجارية ملهمة، واستراتيجيات تُحدث التحول، وحملات تترك أثراً دائماً في تشاد وأفريقيا.",
+      "cta1_fr": "Démarrer un projet",
+      "cta1_en": "Start a Project",
+      "cta1_ar": "ابدأ مشروعك",
+      "cta2_fr": "Voir nos réalisations",
+      "cta2_en": "View Our Work",
+      "cta2_ar": "شاهد أعمالنا",
+      "stat1_value": 120,
+      "stat1_label_fr": "Projets réussis",
+      "stat1_label_en": "Successful Projects",
+      "stat1_label_ar": "مشروع ناجح",
+      "stat2_value": 8,
+      "stat2_label_fr": "Années d'expertise",
+      "stat2_label_en": "Years of Expertise",
+      "stat2_label_ar": "سنوات من الخبرة",
+      "stat3_value": 98,
+      "stat3_label_fr": "% Clients satisfaits",
+      "stat3_label_en": "% Satisfied Clients",
+      "stat3_label_ar": "% رضا العملاء",
+      "bg_image": null,
+      "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.aboutsection",
+    "pk": 1,
+    "fields": {
+      "eyebrow_fr": "— Notre histoire",
+      "eyebrow_en": "— Our Story",
+      "eyebrow_ar": "— قصتنا",
+      "title_fr": "Nés à N'Djamena. Rayonnons en Afrique.",
+      "title_en": "Born in N'Djamena. Shining across Africa.",
+      "title_ar": "وُلدنا في إنجامينا. نتألق في أفريقيا.",
+      "text_fr": "L'ACD n'est pas une agence ordinaire. Nous sommes un moteur de développement. Chaque projet est pensé pour le contexte tchadien tout en intégrant les standards internationaux les plus exigeants. Depuis notre création, nous avons accompagné des institutions, des entreprises et des organisations dans leur transformation communicationnelle.",
+      "text_en": "ACD is not an ordinary agency. We are a development engine. Every project is designed for the Chadian context while meeting the highest international standards. Since our founding, we have supported institutions, businesses and organizations in their communication transformation.",
+      "text_ar": "ACD ليست وكالة عادية. نحن محرك للتنمية. كل مشروع مصمم للسياق التشادي بينما يلتزم بأعلى المعايير الدولية. منذ تأسيسنا، دعمنا المؤسسات والشركات والمنظمات في تحولها التواصلي.",
+      "fact1_label_fr": "Équipe", "fact1_label_en": "Team", "fact1_label_ar": "الفريق",
+      "fact1_value_fr": "18 talents passionnés", "fact1_value_en": "18 passionate talents", "fact1_value_ar": "18 موهبة متحمسة",
+      "fact2_label_fr": "Siège", "fact2_label_en": "HQ", "fact2_label_ar": "المقر",
+      "fact2_value_fr": "N'Djamena, Tchad", "fact2_value_en": "N'Djamena, Chad", "fact2_value_ar": "إنجامينا، تشاد",
+      "fact3_label_fr": "Mission", "fact3_label_en": "Mission", "fact3_label_ar": "المهمة",
+      "fact3_value_fr": "Faire briller le Tchad sur la scène mondiale", "fact3_value_en": "Putting Chad on the world stage", "fact3_value_ar": "إبراز تشاد على الساحة العالمية",
+      "fact4_label_fr": "Vision", "fact4_label_en": "Vision", "fact4_label_ar": "الرؤية",
+      "fact4_value_fr": "L'agence de référence en Afrique centrale", "fact4_value_en": "The reference agency in Central Africa", "fact4_value_ar": "الوكالة المرجعية في وسط أفريقيا",
+      "cta_fr": "Rejoignez l'aventure", "cta_en": "Join the Adventure", "cta_ar": "انضم إلى المغامرة",
+      "image": null, "years_exp": 8, "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service", "pk": 1,
+    "fields": { "icon": "fas fa-bullhorn", "title_fr": "Stratégie & Conseil", "title_en": "Strategy & Advisory", "title_ar": "الاستراتيجية والاستشارة", "text_fr": "Nous élaborons des stratégies de communication sur-mesure alignées sur vos objectifs business et adaptées au contexte africain.", "text_en": "We develop tailored communication strategies aligned with your business objectives and adapted to the African context.", "text_ar": "نضع استراتيجيات اتصال مخصصة متوافقة مع أهدافك التجارية ومكيّفة مع السياق الأفريقي.", "order": 1, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.service", "pk": 2,
+    "fields": { "icon": "fas fa-palette", "title_fr": "Branding & Identité visuelle", "title_en": "Branding & Visual Identity", "title_ar": "العلامة التجارية والهوية البصرية", "text_fr": "Logo, charte graphique, supports print et digitaux. Nous créons des identités visuelles fortes et mémorables qui reflètent vos valeurs.", "text_en": "Logo, brand guidelines, print and digital assets. We create strong, memorable visual identities that reflect your values.", "text_ar": "الشعار، دليل الهوية، المطبوعات والمواد الرقمية. نخلق هويات بصرية قوية ولا تُنسى.", "order": 2, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.service", "pk": 3,
+    "fields": { "icon": "fas fa-globe", "title_fr": "Marketing Digital", "title_en": "Digital Marketing", "title_ar": "التسويق الرقمي", "text_fr": "SEO, publicité en ligne, email marketing et stratégie de contenu. Nous amplifions votre présence digitale avec des résultats mesurables.", "text_en": "SEO, online advertising, email marketing and content strategy. We amplify your digital presence with measurable results.", "text_ar": "تحسين محركات البحث، الإعلان عبر الإنترنت، التسويق عبر البريد الإلكتروني. نعزز حضورك الرقمي بنتائج قابلة للقياس.", "order": 3, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.service", "pk": 4,
+    "fields": { "icon": "fas fa-calendar-star", "title_fr": "Événementiel", "title_en": "Events Management", "title_ar": "إدارة الفعاليات", "text_fr": "Organisation complète de vos événements : conférences, lancements, cérémonies et activations de marque à N'Djamena et au Tchad.", "text_en": "Complete organization of your events: conferences, launches, ceremonies and brand activations in N'Djamena and Chad.", "text_ar": "التنظيم الكامل لفعالياتك: مؤتمرات، إطلاق منتجات، حفلات وتفعيل العلامات التجارية في إنجامينا وتشاد.", "order": 4, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.service", "pk": 5,
+    "fields": { "icon": "fas fa-mobile-alt", "title_fr": "Social Media & Community", "title_en": "Social Media & Community", "title_ar": "السوشال ميديا والمجتمع", "text_fr": "Gestion de vos réseaux sociaux, création de contenu viral et animation de communautés engagées pour vos marques.", "text_en": "Social media management, viral content creation and community engagement for your brands.", "text_ar": "إدارة وسائل التواصل الاجتماعي، إنشاء محتوى فيروسي وبناء مجتمعات متفاعلة.", "order": 5, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.service", "pk": 6,
+    "fields": { "icon": "fas fa-video", "title_fr": "Audiovisuel & Production", "title_en": "Audiovisual & Production", "title_ar": "الإنتاج المرئي والسمعي", "text_fr": "Spots publicitaires, documentaires, photographie professionnelle et production de contenu vidéo de haute qualité.", "text_en": "Commercials, documentaries, professional photography and high-quality video content production.", "text_ar": "الإعلانات التجارية، الأفلام الوثائقية، التصوير الاحترافي وإنتاج محتوى الفيديو عالي الجودة.", "order": 6, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.whyitem", "pk": 1,
+    "fields": { "icon": "fas fa-map-marker-alt", "title_fr": "Expertise locale profonde", "title_en": "Deep Local Expertise", "title_ar": "خبرة محلية عميقة", "text_fr": "Nous connaissons le Tchad comme personne. Nos équipes maîtrisent les spécificités culturelles, linguistiques et médiatiques du marché.", "text_en": "We know Chad like no one else. Our teams master the cultural, linguistic and media specificities of the market.", "text_ar": "نحن نعرف تشاد كما لا يعرفها أحد. فرقنا تتقن الخصوصيات الثقافية واللغوية والإعلامية للسوق.", "order": 1, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.whyitem", "pk": 2,
+    "fields": { "icon": "fas fa-trophy", "title_fr": "Standards internationaux", "title_en": "International Standards", "title_ar": "معايير دولية", "text_fr": "Formés aux meilleures écoles et agences mondiales, nos créatifs apportent une vision globale ancrée dans le contexte africain.", "text_en": "Trained at the best schools and global agencies, our creatives bring a global vision rooted in the African context.", "text_ar": "مدربون في أفضل المدارس والوكالات العالمية، يجلب مبدعونا رؤية عالمية متجذرة في السياق الأفريقي.", "order": 2, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "model": "core.whyitem", "pk": 3,
+    "fields": { "icon": "fas fa-chart-line", "title_fr": "Résultats mesurables", "title_en": "Measurable Results", "title_ar": "نتائج قابلة للقياس", "text_fr": "Chaque campagne est pilotée par les données. Nous fixons des KPIs clairs et assurons un reporting transparent de vos performances.", "text_en": "Every campaign is data-driven. We set clear KPIs and ensure transparent reporting of your performance.", "text_ar": "كل حملة مدفوعة بالبيانات. نضع مؤشرات أداء واضحة ونضمن الإبلاغ الشفاف عن أدائك.", "order": 3, "is_active": true, "created_at": "2025-01-01T00:00:00Z", "updated_at": "2025-01-01T00:00:00Z" }
+  }
+]

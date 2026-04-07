@@ -1,0 +1,255 @@
+/* ═══════════════════════════════════════════════════════════════
+   ACD — Custom Admin CSS  |  Couleurs : Navy #0C1931 · Green #6AAB2E · Gold #C9A84C
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap');
+
+:root {
+  --acd-navy:  #0C1931;
+  --acd-navy2: #162540;
+  --acd-blue:  #3A5F8A;
+  --acd-green: #6AAB2E;
+  --acd-green2:#558F22;
+  --acd-gold:  #C9A84C;
+  --acd-cream: #F5F2ED;
+  --acd-white: #FFFFFF;
+}
+
+/* ── BASE ── */
+body, .content-wrapper, .wrapper { background: #f0f2f5 !important; }
+
+/* ── SIDEBAR ── */
+.main-sidebar, .sidebar { background: var(--acd-navy) !important; }
+.sidebar .nav-sidebar > .nav-item > .nav-link {
+  color: rgba(255,255,255,.72) !important;
+  border-radius: 8px;
+  margin: 2px 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .875rem;
+  font-weight: 500;
+  transition: all .25s;
+}
+.sidebar .nav-sidebar > .nav-item > .nav-link:hover,
+.sidebar .nav-sidebar > .nav-item.menu-open > .nav-link,
+.sidebar .nav-sidebar > .nav-item > .nav-link.active {
+  background: rgba(106,171,46,.18) !important;
+  color: #fff !important;
+  border-left: 3px solid var(--acd-green);
+}
+.sidebar .nav-sidebar > .nav-item > .nav-link i {
+  color: var(--acd-gold) !important;
+  width: 1.4rem;
+}
+.nav-sidebar .nav-treeview .nav-link {
+  color: rgba(255,255,255,.55) !important;
+  font-size: .82rem !important;
+  padding-left: 2.4rem !important;
+}
+.nav-sidebar .nav-treeview .nav-link:hover,
+.nav-sidebar .nav-treeview .nav-link.active {
+  color: var(--acd-green) !important;
+  background: rgba(106,171,46,.10) !important;
+}
+
+/* ── NAVBAR / TOPBAR ── */
+.main-header.navbar {
+  background: var(--acd-navy) !important;
+  border-bottom: 2px solid var(--acd-green2) !important;
+  box-shadow: 0 4px 24px rgba(12,25,49,.35) !important;
+}
+.main-header .navbar-nav .nav-link,
+.main-header .navbar-text { color: rgba(255,255,255,.85) !important; }
+.main-header .navbar-brand {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.55rem !important;
+  font-weight: 700 !important;
+  color: var(--acd-gold) !important;
+  letter-spacing: .04em;
+}
+
+/* ── BREADCRUMB ── */
+.content-header .breadcrumb-item,
+.content-header .breadcrumb-item a { color: var(--acd-navy2) !important; }
+.content-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--acd-navy);
+}
+
+/* ── CARDS ── */
+.card {
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 16px rgba(12,25,49,.07) !important;
+}
+.card-header {
+  background: linear-gradient(135deg, var(--acd-navy) 0%, var(--acd-navy2) 100%) !important;
+  color: #fff !important;
+  border-radius: 14px 14px 0 0 !important;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: .9rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: .85rem 1.4rem;
+  border-bottom: 2px solid var(--acd-green) !important;
+}
+.card-header h3.card-title { color: #fff !important; font-size: .9rem !important; }
+
+/* ── SMALL BOXES (Dashboard) ── */
+.small-box {
+  border-radius: 14px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(12,25,49,.12) !important;
+  transition: transform .25s;
+}
+.small-box:hover { transform: translateY(-4px); }
+.small-box .inner h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.small-box.bg-success { background: linear-gradient(135deg,#6AAB2E,#558F22) !important; }
+.small-box.bg-info    { background: linear-gradient(135deg,#3A5F8A,#0C1931) !important; }
+.small-box.bg-warning { background: linear-gradient(135deg,#C9A84C,#b8943e) !important; }
+.small-box.bg-danger  { background: linear-gradient(135deg,#EF4444,#DC2626) !important; }
+
+/* ── TABLES ── */
+.table thead th {
+  background: var(--acd-navy) !important;
+  color: rgba(255,255,255,.85) !important;
+  font-family: 'Outfit', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: none !important;
+  padding: .9rem 1rem;
+}
+.table tbody tr { transition: background .2s; }
+.table tbody tr:hover { background: rgba(106,171,46,.06) !important; }
+.table td { vertical-align: middle !important; font-size: .88rem; }
+.table-bordered { border: none !important; }
+.table-bordered td, .table-bordered th { border-color: rgba(12,25,49,.07) !important; }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  background: linear-gradient(135deg,var(--acd-navy),var(--acd-blue)) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: .03em !important;
+  box-shadow: 0 4px 12px rgba(12,25,49,.25) !important;
+  transition: all .25s !important;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg,var(--acd-green),var(--acd-green2)) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(106,171,46,.35) !important;
+}
+.btn-success {
+  background: linear-gradient(135deg,var(--acd-green),var(--acd-green2)) !important;
+  border: none !important; border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+.btn-warning {
+  background: linear-gradient(135deg,var(--acd-gold),#b8943e) !important;
+  border: none !important; color: #fff !important;
+  border-radius: 8px !important; font-weight: 600 !important;
+}
+.btn-danger  { border-radius: 8px !important; }
+
+/* ── FORM INPUTS ── */
+.form-control, .select2-container--default .select2-selection--single {
+  border: 1.5px solid rgba(12,25,49,.15) !important;
+  border-radius: 8px !important;
+  padding: .55rem .85rem !important;
+  font-family: 'Outfit', sans-serif;
+  transition: border-color .25s, box-shadow .25s;
+}
+.form-control:focus {
+  border-color: var(--acd-green) !important;
+  box-shadow: 0 0 0 3px rgba(106,171,46,.18) !important;
+  outline: none !important;
+}
+.form-group label {
+  font-weight: 600;
+  font-size: .82rem;
+  letter-spacing: .04em;
+  color: var(--acd-navy);
+  text-transform: uppercase;
+  margin-bottom: .4rem;
+}
+textarea.form-control { min-height: 120px; resize: vertical; }
+
+/* ── TABS (Horizontal tabs) ── */
+.nav-tabs .nav-link {
+  border-radius: 8px 8px 0 0 !important;
+  font-weight: 500;
+  color: var(--acd-navy) !important;
+  font-size: .88rem;
+  transition: all .2s;
+}
+.nav-tabs .nav-link.active {
+  background: var(--acd-navy) !important;
+  color: #fff !important;
+  border-color: var(--acd-navy) !important;
+}
+.nav-tabs .nav-link:hover:not(.active) {
+  background: rgba(12,25,49,.07) !important;
+}
+
+/* ── FIELDSET / INLINE ── */
+fieldset {
+  border: 1.5px solid rgba(12,25,49,.1) !important;
+  border-radius: 10px !important;
+  padding: 1.2rem !important;
+  margin-bottom: 1.5rem !important;
+}
+.collapsible-fieldsets { color: var(--acd-navy) !important; }
+
+/* ── PAGINATION ── */
+.pagination .page-item.active .page-link {
+  background: var(--acd-navy) !important;
+  border-color: var(--acd-navy) !important;
+}
+.pagination .page-link { color: var(--acd-navy) !important; border-radius: 6px !important; }
+.pagination .page-link:hover { background: rgba(12,25,49,.08) !important; }
+
+/* ── BADGES / STATUS ── */
+.badge { border-radius: 6px !important; font-weight: 600 !important; }
+
+/* ── LOGIN PAGE ── */
+.login-page { background: var(--acd-navy) !important; }
+.login-box-body {
+  border-radius: 20px !important;
+  box-shadow: 0 24px 80px rgba(0,0,0,.35) !important;
+}
+.login-logo a {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 2.2rem !important;
+  font-weight: 700 !important;
+  color: var(--acd-gold) !important;
+}
+.login-card-body .btn-primary { width: 100%; padding: .7rem !important; }
+
+/* ── FOOTER ── */
+.main-footer {
+  background: #fff !important;
+  border-top: 1px solid rgba(12,25,49,.08) !important;
+  font-size: .8rem !important;
+  color: rgba(12,25,49,.5) !important;
+}
+
+/* ── IMAGE PREVIEW ── */
+img[style*="height:80px"] {
+  transition: transform .25s;
+}
+img[style*="height:80px"]:hover { transform: scale(1.08); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f0f2f5; }
+::-webkit-scrollbar-thumb { background: rgba(12,25,49,.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--acd-navy); }
