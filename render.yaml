@@ -5,11 +5,10 @@ databases:
     plan: free
 
 services:
-  # ── Backend Django ──────────────────────────────────────────────────
   - type: web
     name: acd-backend
     runtime: python
-    rootDir: backend              # adapte si ton dossier Django a un autre nom
+    # rootDir: backend   ← SUPPRIMER si manage.py est à la racine
     buildCommand: "./build.sh"
     startCommand: "gunicorn acd_backend.wsgi:application --bind 0.0.0.0:$PORT"
     plan: free
@@ -29,7 +28,7 @@ services:
       - key: CORS_ALLOW_ALL
         value: "False"
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://acd-frontend.onrender.com"  # ton vrai URL frontend
+        value: "https://acd-frontend.onrender.com"
       - key: DJANGO_SUPERUSER_USERNAME
         value: admin
       - key: DJANGO_SUPERUSER_EMAIL
@@ -37,20 +36,16 @@ services:
       - key: DJANGO_SUPERUSER_PASSWORD
         generateValue: true
 
-  # ── Frontend React / Vite ───────────────────────────────────────────
   - type: web
     name: acd-frontend
     runtime: static
-    rootDir: frontend             # adapte si ton dossier React a un autre nom
+    rootDir: frontend
     buildCommand: "npm install && npm run build"
-    staticPublishPath: ./dist     # Vite génère dans /dist
+    staticPublishPath: ./dist
     plan: free
     envVars:
       - key: VITE_API_URL
-        fromService:
-          name: acd-backend
-          type: web
-          property: host
+        value: "https://acd-backend.onrender.com"
     routes:
       - type: rewrite
         source: /*
