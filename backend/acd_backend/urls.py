@@ -1,25 +1,19 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from django.shortcuts import redirect
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.http import HttpResponse
+
+# Fonction simple pour que la racine du backend soit neutre
+def home_view(request):
+    return HttpResponse("ACD API Service", content_type="text/plain")
 
 urlpatterns = [
-    # Redirige la racine vers l'admin
-    path('', lambda request: redirect('admin/', permanent=False)),
+    # On change l'URL de l'admin pour la cacher (mettez ce que vous voulez ici)
+    path('doulgue/', admin.site.urls), 
     
-    path('doulgue/', admin.site.urls),
+    # Racine neutre (pas de redirection, pas d'accès admin visible)
+    path('', home_view),
     
-    # Segmentation des APIs pour la clarté et la sécurité
+    # Points d'accès API pour le Frontend
     path('api/core/', include('apps.core.urls')),
     path('api/contact/', include('apps.contact.urls')),
-    
-    # Documentation automatique de l'API
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
