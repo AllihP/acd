@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
+# Arrêter le script en cas d'erreur
 set -o errexit
 
-pip install --upgrade pip
+# Installation des dépendances (via Pip ou Poetry)
+# Si vous utilisez Poetry, remplacez par : poetry install
 pip install -r requirements.txt
 
-python manage.py collectstatic --no-input
+# Préparation de la base de données
 python manage.py migrate
 
-python manage.py createsuperuser \
-  --no-input \
-  --username "$DJANGO_SUPERUSER_USERNAME" \
-  --email    "$DJANGO_SUPERUSER_EMAIL" \
-  2>/dev/null || echo "Superuser déjà existant, ignoré."
+# Collecte des fichiers statiques pour la production
+python manage.py collectstatic --no-input
