@@ -99,7 +99,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://acd-fqjq.onrender.com/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # --- CONFIGURATION CORS (Sécurité pour le Frontend) ---
