@@ -4,22 +4,19 @@ from decouple import config
 import dj_database_url
 from django.urls import reverse_lazy
 
-# ── CHEMINS DE BASE ───────────────────────────────────────────────────
+# --- CHEMINS DE BASE ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ── SÉCURITÉ ──────────────────────────────────────────────────────────
-# En production sur Render, la SECRET_KEY est générée automatiquement
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-fallback-key-for-dev')
-
-# DEBUG doit être False en production
+# --- SÉCURITÉ ---
+SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# Autorise l'URL de votre backend Render et le localhost pour le dev
+# On autorise votre domaine Render et le local
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='acd-fqjq.onrender.com,localhost,127.0.0.1').split(',')
 
-# ── APPLICATIONS ──────────────────────────────────────────────────────
+# --- APPLICATIONS ---
 INSTALLED_APPS = [
-    'unfold',  # Doit être avant django.contrib.admin
+    'unfold',  # Avant admin
     'unfold.contrib.filters',
     'unfold.contrib.forms',
     'django.contrib.admin',
@@ -27,24 +24,24 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic', # Pour les fichiers statiques
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     
-    # Librairies tierces
+    # Tierces
     'rest_framework',
     'corsheaders',
     'django_filters',
     'drf_spectacular',
     
-    # Vos applications locales
+    # Local
     'apps.core',
     'apps.contact',
 ]
 
-# ── MIDDLEWARE ────────────────────────────────────────────────────────
+# --- MIDDLEWARE ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Indispensable pour Render
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Gestion optimisée des statiques
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,7 +56,7 @@ ROOT_URLCONF = 'acd_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,16 +71,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'acd_backend.wsgi.application'
 
-# ── BASE DE DONNÉES ───────────────────────────────────────────────────
-# Utilise DATABASE_URL (PostgreSQL) sur Render, sinon SQLite en local
+# --- BASE DE DONNÉES (Configuration Neon/PostgreSQL) ---
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
+        default=config('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
 
-# ── VALIDATION DES MOTS DE PASSE ──────────────────────────────────────
+# --- VALIDATION DES MOTS DE PASSE ---
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -91,29 +88,40 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ── INTERNATIONALISATION ──────────────────────────────────────────────
+# --- INTERNATIONALISATION ---
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Africa/Ndjamena'
 USE_I18N = True
 USE_TZ = True
 
-# ── FICHIERS STATIQUES ET MÉDIAS ──────────────────────────────────────
+# --- FICHIERS STATIQUES ET MÉDIAS ---
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# Optimisation WhiteNoise pour la production
-if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# ── CONFIGURATION CORS ────────────────────────────────────────────────
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173').split(',')
+# --- CONFIGURATION CORS (Sécurité pour le Frontend) ---
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='https://acd-frontend.onrender.com').split(',')
 CORS_ALLOW_CREDENTIALS = True
 
-# ── PARAMÈTRES DE SÉCURITÉ PRODUCTION ─────────────────────────────────
+# --- REST FRAMEWORK ---
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# --- SÉCURITÉ PRODUCTION ---
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
@@ -123,41 +131,25 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
-# ── CONFIGURATION UNFOLD ADMIN ────────────────────────────────────────
+# --- CONFIGURATION UNFOLD ADMIN ---
 UNFOLD = {
     "SITE_TITLE": "ACD Admin",
     "SITE_HEADER": "Administration ACD",
-    "SITE_SYMBOL": "speed",
     "SHOW_HISTORY": True,
-    "SHOW_VIEW_ON_SITE": True,
     "SIDEBAR": {
         "show_search": True,
-        "show_all_applications": False,
         "navigation": [
             {
                 "title": "Contenu",
-                "separator": True,
                 "items": [
-                    {
-                        "title": "Portfolio",
-                        "icon": "photo_library",
-                        "link": reverse_lazy("admin:core_portfolioitem_changelist"),
-                    },
-                    {
-                        "title": "Témoignages",
-                        "icon": "format_quote",
-                        "link": reverse_lazy("admin:core_testimonial_changelist"),
-                    },
+                    {"title": "Portfolio", "icon": "photo_library", "link": reverse_lazy("admin:core_portfolioitem_changelist")},
+                    {"title": "Témoignages", "icon": "format_quote", "link": reverse_lazy("admin:core_testimonial_changelist")},
                 ],
             },
             {
                 "title": "Contact",
                 "items": [
-                    {
-                        "title": "Messages",
-                        "icon": "mail",
-                        "link": reverse_lazy("admin:contact_contactmessage_changelist"),
-                    },
+                    {"title": "Messages", "icon": "mail", "link": reverse_lazy("admin:contact_contactmessage_changelist")},
                 ],
             },
         ],
