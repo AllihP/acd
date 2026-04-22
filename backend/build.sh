@@ -11,3 +11,5 @@ python manage.py migrate
 
 # Collecte des fichiers statiques pour la production
 python manage.py collectstatic --no-input
+
+python manage.py createsuperuser --no-input || true

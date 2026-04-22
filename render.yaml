@@ -22,7 +22,7 @@ services:
     plan: free
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11.0"
+        value: "3.12.0"  # Au lieu de 3.11.0
       - key: DATABASE_URL
         fromDatabase:
           name: acd-db
