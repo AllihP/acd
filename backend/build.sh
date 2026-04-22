@@ -12,5 +12,4 @@ python manage.py migrate
 # Collecte des fichiers statiques pour la production
 python manage.py collectstatic --no-input
 
-# Dans votre fichier build.sh
-python manage.py createsuperuser --no-input --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL || true
+python manage.py createsuperuser --no-input --username "$DJANGO_SUPERUSER_USERNAME" --email "$DJANGO_SUPERUSER_EMAIL" || true
