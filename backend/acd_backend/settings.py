@@ -1,16 +1,25 @@
+import os
 from pathlib import Path
 from decouple import config
+import dj_database_url
 from django.urls import reverse_lazy
-from django.templatetags.static import static
 
+# ── CHEMINS DE BASE ───────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-acd-dev-key-changeme-in-production')
-DEBUG = config('DEBUG', default=True, cast=bool)
+# ── SÉCURITÉ ──────────────────────────────────────────────────────────
+# En production sur Render, la SECRET_KEY est générée automatiquement
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-fallback-key-for-dev')
+
+# DEBUG doit être False en production
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+# Autorise l'URL de votre backend Render et le localhost pour le dev
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
+# ── APPLICATIONS ──────────────────────────────────────────────────────
 INSTALLED_APPS = [
-    'unfold',
+    'unfold',  # Doit être avant django.contrib.admin
     'unfold.contrib.filters',
     'unfold.contrib.forms',
     'django.contrib.admin',
@@ -18,16 +27,24 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic', # Pour les fichiers statiques
     'django.contrib.staticfiles',
+    
+    # Librairies tierces
     'rest_framework',
     'corsheaders',
     'django_filters',
+    'drf_spectacular',
+    
+    # Vos applications locales
     'apps.core',
     'apps.contact',
 ]
 
+# ── MIDDLEWARE ────────────────────────────────────────────────────────
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Indispensable pour Render
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,13 +74,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'acd_backend.wsgi.application'
 
+# ── BASE DE DONNÉES ───────────────────────────────────────────────────
+# Utilise DATABASE_URL (PostgreSQL) sur Render, sinon SQLite en local
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600
+    )
 }
 
+# ── VALIDATION DES MOTS DE PASSE ──────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -71,103 +91,53 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# ── INTERNATIONALISATION ──────────────────────────────────────────────
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Africa/Ndjamena'
 USE_I18N = True
 USE_TZ = True
 
+# ── FICHIERS STATIQUES ET MÉDIAS ──────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# Optimisation WhiteNoise pour la production
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# ── CONFIGURATION CORS ────────────────────────────────────────────────
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173').split(',')
+CORS_ALLOW_CREDENTIALS = True
 
-# ── CORS ───────────────────────────────────────────────────────────────
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:3000",
-]
-CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL', default=False, cast=bool)
+# ── PARAMÈTRES DE SÉCURITÉ PRODUCTION ─────────────────────────────────
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
-# ── DRF ────────────────────────────────────────────────────────────────
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ],
-}
-
-# ── UNFOLD — Design Admin Personnalisé ACD ────────────────────────────
+# ── CONFIGURATION UNFOLD ADMIN ────────────────────────────────────────
 UNFOLD = {
     "SITE_TITLE": "ACD Admin",
-    "SITE_HEADER": "ACD",
-    "SITE_SUBHEADER": "Agence de Communication pour le Développement",
-    "SITE_URL": "http://localhost:5173",
-    "SITE_ICON": None,
-    "SITE_LOGO": None,
-    "SITE_SYMBOL": "settings",
+    "SITE_HEADER": "Administration ACD",
+    "SITE_SYMBOL": "speed",
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
-    "STYLES": [
-        lambda request: static("admin/css/custom_admin.css"),
-    ],
-    "SCRIPTS": [],
-    # Palette couleurs ACD : Navy #0C1931 · Blue #3A5F8A
-    "COLORS": {
-        "primary": {
-            "50":  "240 244 248",
-            "100": "220 229 238",
-            "200": "183 203 221",
-            "300": "130 163 194",
-            "400": "84 127 168",
-            "500": "58 95 138",    # --acd-blue
-            "600": "46 76 111",
-            "700": "36 60 87",
-            "800": "25 43 66",
-            "900": "12 25 49",     # --acd-navy
-            "950": "6 13 26",
-        },
-    },
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": False,
         "navigation": [
             {
-                "title": "Contenu du site",
+                "title": "Contenu",
                 "separator": True,
-                "collapsible": False,
                 "items": [
-                    {
-                        "title": "Paramètres",
-                        "icon": "settings",
-                        "link": reverse_lazy("admin:core_sitesettings_changelist"),
-                    },
-                    {
-                        "title": "Hero",
-                        "icon": "home",
-                        "link": reverse_lazy("admin:core_herosection_changelist"),
-                    },
-                    {
-                        "title": "À propos",
-                        "icon": "business",
-                        "link": reverse_lazy("admin:core_aboutsection_changelist"),
-                    },
-                    {
-                        "title": "Services",
-                        "icon": "star",
-                        "link": reverse_lazy("admin:core_service_changelist"),
-                    },
-                    {
-                        "title": "Pourquoi nous",
-                        "icon": "check_circle",
-                        "link": reverse_lazy("admin:core_whyitem_changelist"),
-                    },
                     {
                         "title": "Portfolio",
                         "icon": "photo_library",
@@ -182,8 +152,6 @@ UNFOLD = {
             },
             {
                 "title": "Contact",
-                "separator": True,
-                "collapsible": False,
                 "items": [
                     {
                         "title": "Messages",
@@ -192,23 +160,8 @@ UNFOLD = {
                     },
                 ],
             },
-            {
-                "title": "Administration",
-                "separator": True,
-                "collapsible": True,
-                "items": [
-                    {
-                        "title": "Utilisateurs",
-                        "icon": "person",
-                        "link": reverse_lazy("admin:auth_user_changelist"),
-                    },
-                    {
-                        "title": "Groupes",
-                        "icon": "group",
-                        "link": reverse_lazy("admin:auth_group_changelist"),
-                    },
-                ],
-            },
         ],
     },
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
