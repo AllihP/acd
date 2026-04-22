@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-# Arrêter le script en cas d'erreur
 set -o errexit
 
-# Installation des dépendances (via Pip ou Poetry)
-# Si vous utilisez Poetry, remplacez par : poetry install
+# Installation
 pip install -r requirements.txt
 
-# Préparation de la base de données
+# Migrations vers Neon
 python manage.py migrate
-
-# Collecte des fichiers statiques pour la production
 python manage.py collectstatic --no-input
 
-python manage.py createsuperuser --no-input --username "$DJANGO_SUPERUSER_USERNAME" --email "$DJANGO_SUPERUSER_EMAIL" || true
+# Création sécurisée de l'admin
+if [ "$DJANGO_SUPERUSER_USERNAME" ]; then
+  python manage.py createsuperuser \
+    --no-input \
+    --username "$DJANGO_SUPERUSER_USERNAME" \
+    --email "$DJANGO_SUPERUSER_EMAIL" || true
+fi

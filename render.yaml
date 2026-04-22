@@ -1,10 +1,5 @@
-databases:
-  - name: acd-db
-    databaseName: acd_db
-    user: acd_user
-    plan: free
-
 services:
+  # --- BACKEND ---
   - type: web
     name: acd-backend
     runtime: python
@@ -16,24 +11,15 @@ services:
       - key: PYTHON_VERSION
         value: "3.12.0"
       - key: DATABASE_URL
-        fromDatabase:
-          name: acd-db
-          property: connectionString
-      - key: SECRET_KEY
-        generateValue: true
+        sync: false # On la remplit manuellement avec Neon
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
         value: "acd-backend.onrender.com"
-      - key: CORS_ALLOWED_ORIGINS
-        value: "https://acd-frontend.onrender.com"
       - key: DJANGO_SUPERUSER_USERNAME
         value: admin
-      - key: DJANGO_SUPERUSER_EMAIL
-        value: admin@acd.td
-      - key: DJANGO_SUPERUSER_PASSWORD
-        generateValue: true
 
+  # --- FRONTEND ---
   - type: web
     name: acd-frontend
     runtime: static
