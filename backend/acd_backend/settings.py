@@ -3,26 +3,23 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 
-# Chemins de base
+# 1. Chemins de base
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- SÉCURITÉ ---
+# 2. Sécurité
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-# On s'assure que le domaine Render est autorisé
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='acd-fqjq.onrender.com,localhost,127.0.0.1').split(',')
 
-# --- APPLICATIONS ---
+# 3. Applications
 INSTALLED_APPS = [
-    'unfold', # Interface moderne
-    'unfold.contrib.filters',
-    'unfold.contrib.forms',
+    'unfold', # Interface moderne pour l'administration
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic', # Optimisation statique
+    'whitenoise.runserver_nostatic', # Optimisation des fichiers statiques
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
@@ -30,9 +27,10 @@ INSTALLED_APPS = [
     'apps.contact',
 ]
 
+# 4. Middleware (L'ordre est CRITIQUE pour éviter les erreurs MIME)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Indispensable pour servir React
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Doit être juste après SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -44,12 +42,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'acd_backend.urls'
 
-# --- TEMPLATES ---
+# 5. Templates (Configuré pour lire l'index.html de React)
+REACT_DIST_DIR = BASE_DIR.parent / 'frontend' / 'dist'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # Django doit chercher l'index.html dans le dossier où collectstatic rassemble tout
-        'DIRS': [os.path.join(BASE_DIR, 'staticfiles')], 
+        'DIRS': [REACT_DIST_DIR], # Django va chercher l'index.html directement ici
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,9 +61,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'acd_backend.wsgi.application'
-
-# --- BASE DE DONNÉES (Neon/PostgreSQL) ---
+# 6. Base de données (Neon)
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
@@ -72,45 +69,34 @@ DATABASES = {
     )
 }
 
-# --- FICHIERS STATIQUES (FIX MIME TYPE & VITE) ---
+# 7. Gestion des fichiers Statiques (Le cœur du problème MIME)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Dossier source de React (Vite build)
-REACT_DIST_DIR = os.path.join(BASE_DIR.parent, 'frontend', 'dist')
-
+# Dossiers où Django cherche les fichiers avant collectstatic
 STATICFILES_DIRS = [
-    os.path.join(REACT_DIST_DIR, 'assets'), 
-    REACT_DIST_DIR,
+    REACT_DIST_DIR, # Contient le dossier /assets généré par Vite
 ]
-# Gestion du cache et de la compression pour éviter les erreurs MIME
+
+# Utilisation de WhiteNoise pour servir et compresser les fichiers (évite les erreurs MIME)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Médias (Images du Portfolio)
+# 8. Médias (Images du Portfolio)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# --- CONFIGURATION SUPPLÉMENTAIRE ---
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Configuration CORS pour autoriser le frontend
+# 9. CORS & Sécurité supplémentaire
 CORS_ALLOWED_ORIGINS = [
     "https://acd-fqjq.onrender.com",
     "http://localhost:5173",
 ]
+CORS_ALLOW_CREDENTIALS = True
 
-# --- PARAMÈTRES UNFOLD (ACD ADMIN) ---
-UNFOLD = {
-    "SITE_TITLE": "ACD Admin",
-    "SITE_HEADER": "Agence de Communication pour le Développement",
-    "SITE_SYMBOL": "speed", # Icône dashboard
-    "COLORS": {
-        "primary": {
-            "50": "250 245 255",
-            "100": "243 232 255",
-            "500": "168 85 247",
-            "600": "147 51 234",
-            "900": "88 28 135",
-        },
-    },
-}
+# Sécurité HTTPS pour la production Render
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
