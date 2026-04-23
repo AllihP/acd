@@ -4,7 +4,7 @@ from decouple import config
 import dj_database_url
 
 # =============================================================================
-# CHEMINS DE BASE (CORRIGÉ : __file__ et commentaires)
+# CHEMINS DE BASE
 # =============================================================================
 # Chemins de base
 BASE_DIR = Path(__file__).resolve().parent.parent
