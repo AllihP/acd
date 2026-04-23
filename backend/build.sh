@@ -1,18 +1,22 @@
-# render.yaml
-services:
-  - type: web
-    name: acd-backend
-    env: python
-    buildCommand: ./backend/build.sh
-    startCommand: gunicorn --chdir backend acd_backend.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
-    envVars:
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DEBUG
-        value: false
-      - key: ALLOWED_HOSTS
-        value: acd-fqjq.onrender.com,localhost,127.0.0.1
-      - key: DATABASE_URL
-        sync: false  # À définir manuellement dans le dashboard pour sécurité
-      - key: PORT
-        value: 10000
+#!/usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+# Render exécute depuis la racine du repo → pwd suffit
+PROJECT_ROOT="$(pwd)"
+
+echo "🚀 [1/3] Construction du Frontend (Vite)..."
+cd "$PROJECT_ROOT/frontend"
+npm ci --prefer-offline --no-audit
+npm run build  # → génère frontend/dist avec base: '/static/'
+
+echo "🐍 [2/3] Installation du Backend (Django)..."
+cd "$PROJECT_ROOT/backend"
+pip install -r requirements.txt --no-cache-dir
+
+echo "📂 [3/3] Collecte des statiques & Migrations..."
+# manage.py charge automatiquement DJANGO_SETTINGS_MODULE
+python manage.py collectstatic --no-input --clear
+python manage.py migrate --no-input
+
+echo "✅ Déploiement ACD terminé !"

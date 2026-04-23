@@ -10,13 +10,11 @@ urlpatterns = [
     path('api/contact/', include('apps.contact.urls')),
 ]
 
-# Médias en dev uniquement
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # ⚠️ CATCH-ALL REACT : EXCLUT static/, assets/, api/, admin/
-# La regex (?!...) empêche la capture des fichiers statiques
 urlpatterns += [
-    re_path(r'^(?!static/|media/|api/|admin/|assets/|favicon\.ico|_next/).*$', 
+    re_path(r'^(?!static/|media/|api/|admin/|assets/|favicon\.ico).*$', 
             TemplateView.as_view(template_name='index.html')),
 ]

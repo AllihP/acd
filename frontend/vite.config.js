@@ -1,25 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
   
-  // 🔑 CRITIQUE : Préfixe les assets avec /static/ pour Django
+  // 🔑 CRITIQUE : Préfixe les URLs d'assets avec /static/ pour Django
   base: '/static/',
   
   build: {
-    outDir: resolve(__dirname, '../backend/frontend/dist'),
+    // Sortie relative au dossier frontend (pas de chemin absolu)
+    outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
     manifest: true,
-    rollupOptions: {
-      output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
-    }
   },
   
   server: {
