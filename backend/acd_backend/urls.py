@@ -1,13 +1,13 @@
-from django.contrib import admin
-from django.urls import path, include, re_path
-from django.views.generic import TemplateView
+from django.views.static import serve
+import os
 
 urlpatterns = [
-    path('doulgue/', admin.site.urls), # Admin secret
+    path('doulgue/', admin.site.urls), #
     path('api/core/', include('apps.core.urls')),
-    path('api/contact/', include('apps.contact.urls')),
-
-    # Sert l'index.html de React pour TOUTES les autres routes
-    # Django cherchera ce fichier dans REACT_DIST_DIR défini dans settings.py
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
+    
+    # On sert l'index.html physique qui est maintenant dans staticfiles
+    re_path(r'^.*$', serve, {
+        'document_root': settings.STATIC_ROOT,
+        'path': 'index.html'
+    }),
 ]
