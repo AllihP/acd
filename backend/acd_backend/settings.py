@@ -94,7 +94,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [REACT_DIST_DIR]
 
-# Remplace l'ancien STATICFILES_STORAGE déprécié
+# ✅ Remplace l'ancien STATICFILES_STORAGE déprécié
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
