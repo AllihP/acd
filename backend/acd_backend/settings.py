@@ -6,6 +6,7 @@ import dj_database_url
 # =============================================================================
 # CHEMINS DE BASE
 # =============================================================================
+# Chemins de base
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # =============================================================================
@@ -22,9 +23,7 @@ ALLOWED_HOSTS = config(
 # APPLICATIONS
 # =============================================================================
 INSTALLED_APPS = [
-    # Interface admin moderne
     'unfold',
-    # Django contrib
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,22 +31,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    # Apps tierces
     'rest_framework',
     'corsheaders',
-    # Apps locales
     'apps.core',
     'apps.contact',
 ]
 
 # =============================================================================
-# MIDDLEWARE (Ordre critique)
+# MIDDLEWARE
 # =============================================================================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Juste après SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',       # Avant CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -59,14 +56,14 @@ ROOT_URLCONF = 'acd_backend.urls'
 WSGI_APPLICATION = 'acd_backend.wsgi.application'
 
 # =============================================================================
-# TEMPLATES (Point d'entrée React/Vite)
+# TEMPLATES
 # =============================================================================
 REACT_DIST_DIR = BASE_DIR.parent / 'frontend' / 'dist'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [REACT_DIST_DIR],
+        'DIRS': [REACT_DIST_DIR],  # ← Indispensable pour trouver index.html
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,24 +77,24 @@ TEMPLATES = [
 ]
 
 # =============================================================================
-# BASE DE DONNÉES (Neon PostgreSQL + PgBouncer)
+# BASE DE DONNÉES (Neon + PgBouncer)
 # =============================================================================
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=0,  # ← 0 obligatoire si DATABASE_URL contient ?pgbouncer=true
+        conn_max_age=0,  # ← 0 requis avec ?pgbouncer=true
         ssl_require=True
     )
 }
 
 # =============================================================================
-# FICHIERS STATIQUES ET MÉDIAS
+# STATIQUES ET MÉDIAS (Django 4.2+ compatible)
 # =============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [REACT_DIST_DIR]  # Dossier de sortie du build Vite
+STATICFILES_DIRS = [REACT_DIST_DIR]
 
-# ✅ Configuration WhiteNoise compatible Django 4.2+ (remplace STATICFILES_STORAGE)
+# ✅ Remplace l'ancien STATICFILES_STORAGE déprécié
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -111,11 +108,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # =============================================================================
-# CONFIGURATION CORS
+# CORS
 # =============================================================================
 CORS_ALLOWED_ORIGINS = [
     "https://acd-fqjq.onrender.com",
-    "http://localhost:5173",  # Vite dev server
+    "http://localhost:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
