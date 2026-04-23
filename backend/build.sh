@@ -2,7 +2,7 @@
 set -o errexit
 set -o pipefail
 
-# Render exécute depuis la racine du repo → pwd suffit
+# Render exécute depuis la racine du repo
 PROJECT_ROOT="$(pwd)"
 
 echo "🚀 [1/3] Construction du Frontend..."

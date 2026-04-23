@@ -3,14 +3,14 @@ import { useLang } from '../context/LangContext'
 
 export default function Footer({ settings }) {
   const { lang, ui } = useLang()
-  const addr  = settings[`address_${lang}`] || settings.address_fr || "N'Djamena, Tchad"
-
+  const addr = settings[`address_${lang}`] || settings.address_fr || "N'Djamena, Tchad"
+  
   const navLinks = [
-    { to: '/',             label: ui.nav_home },
-    { to: '/a-propos',     label: ui.nav_about },
+    { to: '/', label: ui.nav_home },
+    { to: '/a-propos', label: ui.nav_about },
     { to: '/realisations', label: ui.nav_realisations },
-    { to: '/projets',      label: ui.nav_projets },
-    { to: '/contact',      label: ui.nav_contact },
+    { to: '/projets', label: ui.nav_projets },
+    { to: '/contact', label: ui.nav_contact },
   ]
 
   return (
@@ -18,17 +18,15 @@ export default function Footer({ settings }) {
       {/* Top */}
       <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 3rem 4rem', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '3rem' }}>
         {/* Brand */}
-        <div>
-          <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '2rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '1.2rem', letterSpacing: '0.06em' }}>
-            ACD
-          </div>
+        <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '2rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '1.2rem', letterSpacing: '0.06em' }}>
+          ACD
           <p style={{ fontSize: '0.9rem', lineHeight: 1.7, maxWidth: 320, marginBottom: '2rem' }}>{ui.footer_desc}</p>
           <div style={{ display: 'flex', gap: '1rem' }}>
-            {settings.facebook  && <SocialIcon href={settings.facebook}  icon="fab fa-facebook-f" />}
-            {settings.linkedin  && <SocialIcon href={settings.linkedin}  icon="fab fa-linkedin-in" />}
+            {settings.facebook && <SocialIcon href={settings.facebook} icon="fab fa-facebook-f" />}
+            {settings.linkedin && <SocialIcon href={settings.linkedin} icon="fab fa-linkedin-in" />}
             {settings.instagram && <SocialIcon href={settings.instagram} icon="fab fa-instagram" />}
-            {settings.twitter   && <SocialIcon href={settings.twitter}   icon="fab fa-x-twitter" />}
-            {settings.youtube   && <SocialIcon href={settings.youtube}   icon="fab fa-youtube" />}
+            {settings.twitter && <SocialIcon href={settings.twitter} icon="fab fa-x-twitter" />}
+            {settings.youtube && <SocialIcon href={settings.youtube} icon="fab fa-youtube" />}
           </div>
         </div>
 

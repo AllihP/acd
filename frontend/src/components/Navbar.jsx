@@ -4,8 +4,8 @@ import { useLang } from '../context/LangContext'
 
 export default function Navbar({ settings }) {
   const { lang, setLang, ui } = useLang()
-  const [scrolled, setScrolled]   = useState(false)
-  const [menuOpen, setMenuOpen]   = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -18,11 +18,11 @@ export default function Navbar({ settings }) {
   useEffect(() => { setMenuOpen(false) }, [location])
 
   const links = [
-    { to: '/',             label: ui.nav_home },
-    { to: '/a-propos',     label: ui.nav_about },
+    { to: '/', label: ui.nav_home },
+    { to: '/a-propos', label: ui.nav_about },
     { to: '/realisations', label: ui.nav_realisations },
-    { to: '/projets',      label: ui.nav_projets },
-    { to: '/contact',      label: ui.nav_contact },
+    { to: '/projets', label: ui.nav_projets },
+    { to: '/contact', label: ui.nav_contact },
   ]
 
   const isActive = (to) => location.pathname === to
@@ -52,8 +52,7 @@ export default function Navbar({ settings }) {
         </Link>
 
         {/* Desktop Links */}
-        <ul style={{ display: 'flex', alignItems: 'center', gap: 0, listStyle: 'none' }}
-            className="nav-links-desktop">
+        <ul style={{ display: 'flex', alignItems: 'center', gap: 0, listStyle: 'none' }} className="nav-links-desktop">
           {links.map(l => (
             <li key={l.to}>
               <Link to={l.to} style={{

@@ -1,11 +1,7 @@
 import axios from 'axios'
-
-// L'URL de votre Backend Render
 const BASE = "https://acd-fqjq.onrender.com/api"
-
 const api = axios.create({ baseURL: BASE })
 
-// Chemins exacts pour correspondre au backend
 export const fetchAll          = ()      => api.get('/core/all/')
 export const fetchHero         = ()      => api.get('/core/hero/')
 export const fetchPortfolio    = (cat)   => api.get('/core/portfolio/' + (cat ? `?category=${cat}` : ''))

@@ -11,14 +11,12 @@ import Contact from './pages/Contact'
 import { fetchAll } from './api/api'
 import { useLang } from './context/LangContext'
 
-// Composant pour scroller en haut à chaque navigation
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
   return null
 }
 
-// Écran de chargement
 function LoadingScreen({ hide }) {
   return (
     <div className={`loading-screen${hide ? ' hide' : ''}`}>
@@ -48,7 +46,6 @@ export default function App() {
 
   const settings = siteData?.settings || {}
 
-  // Affichage du loader pendant le chargement
   if (loading) return <LoadingScreen hide={hideLoader} />
 
   return (

@@ -88,13 +88,13 @@ DATABASES = {
 }
 
 # =============================================================================
-# STATIQUES ET MÉDIAS (CORRIGÉ : STORAGES au lieu de STATICFILES_STORAGE)
+# STATIQUES ET MÉDIAS (CORRIGÉ : STORAGES compatible Django 6.0.3)
 # =============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [REACT_DIST_DIR]
 
-# ✅ Configuration WhiteNoise compatible Django 6.0.3
+# ✅ Remplace STATICFILES_STORAGE (déprécié)
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
