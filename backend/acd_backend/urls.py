@@ -1,19 +1,19 @@
 from django.contrib import admin
-from django.urls import path, include, re_path  # <-- 'path' doit être présent ici
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
 urlpatterns = [
     # Accès à l'administration Unfold
-    path('doulgue/', admin.site.urls), 
+    path('doulgue/', admin.site.urls),
     
     # Endpoints de l'API ACD
     path('api/core/', include('apps.core.urls')),
     path('api/contact/', include('apps.contact.urls')),
-    
-    # Règle pour servir le Frontend React
-    # Sert l'index.html pour toutes les routes qui ne sont pas des API
+
+    # Fallback pour le Frontend React (SPA)
+    # Doit obligatoirement être en DERNIER pour ne pas capturer les API/Admin
     re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
 ]
 
