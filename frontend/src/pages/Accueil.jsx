@@ -124,7 +124,7 @@ export default function Accueil({ data }) {
             {t(hero,lang,'label')||"Agence 360° — N'Djamena, Tchad"}
           </div>
           <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(3.4rem,5.5vw,7rem)', fontWeight:700, lineHeight:1, letterSpacing:'-0.02em', color:'white', maxWidth:720, marginBottom:'2.2rem', opacity:heroInView?1:0, transform:heroInView?'translateY(0)':'translateY(30px)', transition:'opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s' }}>
-            {t(hero,lang,'title')||'Communication. Stratégie. Impact.'}
+            {t(hero,lang,'title')||'Communication. Marketing . Evenementiel'}
           </h1>
           <p style={{ fontSize:'1.1rem', color:'rgba(255,255,255,0.65)', maxWidth:500, lineHeight:1.7, marginBottom:'3rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.5s' }}>
             {t(hero,lang,'subtitle')}
