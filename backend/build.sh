@@ -1,22 +1,17 @@
 #!/usr/bin/env bash
 set -o errexit
 
-# Définition de la racine
-ROOT_DIR=$(dirname "$(cd "$(dirname "$0")" && pwd)")
-
-echo "🚀 Étape 1 : Build du Frontend (Vite)..."
-cd "$ROOT_DIR/frontend"
+# 1. Build du Frontend
+cd frontend
 npm install
-chmod +x node_modules/.bin/vite
-npm run build # Génère le dossier dist/
+npm run build # Ici Vite crée le dossier 'dist'
+cd ..
 
-echo "🐍 Étape 2 : Préparation du Backend (Django)..."
-cd "$ROOT_DIR/backend"
+# 2. Préparation du Backend
+cd backend
 pip install -r requirements.txt
 
-# IMPORTANT : On vide l'ancien dossier pour éviter les erreurs MIME
-echo "📂 Étape 3 : Collecte des fichiers statiques..."
+# 3. La fusion (Collectstatic)
+# Django va prendre le 'index.html' de React et le mettre dans 'staticfiles'
 python manage.py collectstatic --no-input --clear
 python manage.py migrate
-
-echo "✅ Déploiement ACD réussi !"
