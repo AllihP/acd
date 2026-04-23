@@ -1,21 +1,18 @@
-#!/usr/bin/env bash
-set -o errexit
-set -o pipefail
-
-PROJECT_ROOT="$(pwd)"
-
-echo "🚀 [1/3] Construction du Frontend..."
-cd "$PROJECT_ROOT/frontend"
-npm ci --prefer-offline --no-audit
-npm run build
-
-echo "🐍 [2/3] Installation du Backend..."
-cd "$PROJECT_ROOT/backend"
-pip install -r requirements.txt --no-cache-dir
-
-echo "📂 [3/3] Collecte des statiques & Migrations..."
-export DJANGO_SETTINGS_MODULE=acd_backend.settings
-python manage.py collectstatic --no-input --clear
-python manage.py migrate
-
-echo "✅ Déploiement ACD terminé !"
+# render.yaml
+services:
+  - type: web
+    name: acd-backend
+    env: python
+    buildCommand: ./backend/build.sh
+    startCommand: gunicorn --chdir backend acd_backend.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: acd-fqjq.onrender.com,localhost,127.0.0.1
+      - key: DATABASE_URL
+        sync: false  # À définir manuellement dans le dashboard pour sécurité
+      - key: PORT
+        value: 10000
