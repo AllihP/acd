@@ -1,3 +1,6 @@
+# =============================================================================
+# IMPORTS
+# =============================================================================
 import os
 from pathlib import Path
 from decouple import config
@@ -6,6 +9,7 @@ import dj_database_url
 # =============================================================================
 # CHEMINS DE BASE
 # =============================================================================
+# Chemins de base (CORRIGÉ : __file__ avec doubles underscores)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # =============================================================================
@@ -19,23 +23,26 @@ ALLOWED_HOSTS = config(
 ).split(',')
 
 # =============================================================================
-# APPLICATIONS (Ordre critique pour Unfold)
+# APPLICATIONS
 # =============================================================================
 INSTALLED_APPS = [
-    'unfold',  # Interface admin moderne
+    # Admin moderne Unfold (doit être en premier)
+    'unfold',
+    
+    # Django contrib
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',  # Service statique optimisé
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     
     # Apps tierces
     'rest_framework',
     'corsheaders',
-    'drf_spectacular',  # Documentation API OpenAPI
-    'django_filters',   # Filtrage API
+    'drf_spectacular',
+    'django_filters',
     
     # Apps locales
     'apps.core',
@@ -47,9 +54,9 @@ INSTALLED_APPS = [
 # =============================================================================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Doit être juste après SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Juste après SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',       # Doit être avant CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',       # Avant CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -82,12 +89,12 @@ TEMPLATES = [
 ]
 
 # =============================================================================
-# BASE DE DONNÉES (Neon PostgreSQL)
+# BASE DE DONNÉES (Neon PostgreSQL avec PgBouncer)
 # =============================================================================
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=0,  # ← Désactive les connexions persistantes côté Django
+        conn_max_age=0,  # ← 0 si DATABASE_URL contient ?pgbouncer=true
         ssl_require=True
     )
 }
@@ -101,7 +108,7 @@ STATICFILES_DIRS = [
     REACT_DIST_DIR,  # Contient le dossier /assets de Vite
 ]
 
-# Configuration WhiteNoise compatible Django 4.2+
+# Configuration WhiteNoise compatible Django 4.2+ (CORRIGÉ : remplace STATICFILES_STORAGE)
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -138,10 +145,11 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 }
 
 # =============================================================================
-# DRF SPECTACULAR - Documentation API
+# DRF SPECTACULAR - Documentation API OpenAPI 3
 # =============================================================================
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ACD API',
@@ -149,6 +157,11 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+    },
 }
 
 # =============================================================================
@@ -157,8 +170,10 @@ SPECTACULAR_SETTINGS = {
 UNFOLD = {
     "SITE_TITLE": "ACD Admin",
     "SITE_HEADER": "ACD Administration",
+    "SITE_URL": "/",
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": False,
+    "THEME": "light",
 }
 
 # =============================================================================
