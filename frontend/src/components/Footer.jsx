@@ -88,11 +88,9 @@ export default function Footer({ settings }) {
 function SocialIcon({ href, icon }) {
   return (
     <a href={href} target="_blank" rel="noreferrer" style={{
-      width: 40, height: 40, borderRadius: 10,
-      background: 'rgba(255,255,255,0.07)',
+      width: 40, height: 40, borderRadius: 10, background: 'rgba(255,255,255,0.07)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem',
-      transition: 'all 0.25s'
+      color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', transition: 'all 0.25s'
     }}
     onMouseEnter={e => { e.currentTarget.style.background = 'var(--green)'; e.currentTarget.style.color = 'white' }}
     onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}>

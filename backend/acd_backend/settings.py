@@ -82,19 +82,19 @@ TEMPLATES = [
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=0,  # ← 0 si DATABASE_URL contient ?pgbouncer=true
+        conn_max_age=0,  # ← 0 requis si DATABASE_URL contient ?pgbouncer=true
         ssl_require=True
     )
 }
 
 # =============================================================================
-# STATIQUES ET MÉDIAS (CORRIGÉ : STORAGES compatible Django 6.0.3)
+# STATIQUES ET MÉDIAS (Django 4.2+ compatible)
 # =============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [REACT_DIST_DIR]
 
-# ✅ Remplace STATICFILES_STORAGE (déprécié Django 4.2+)
+# Remplace l'ancien STATICFILES_STORAGE déprécié
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",

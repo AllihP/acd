@@ -5,20 +5,16 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    # Administration
     path('doulgue/', admin.site.urls),
-    
-    # API endpoints (DOIVENT être avant le catch-all)
     path('api/core/', include('apps.core.urls')),
     path('api/contact/', include('apps.contact.urls')),
 ]
 
-# Servir les médias en développement uniquement
+# Fichiers médias en dev uniquement
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# ⚠️ CATCH-ALL REACT : EXCLUT explicitement static/, assets/, api/, admin/, media/
-# La regex (?!...) est une "negative lookahead" qui empêche la capture des fichiers statiques
+# Catch-all React SPA : EXCLUT statiques, API, admin, assets
 urlpatterns += [
     re_path(r'^(?!static/|media/|api/|admin/|assets/|favicon\.ico).*$', 
             TemplateView.as_view(template_name='index.html')),
