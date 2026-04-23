@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import ContactMessageView
+from .views import contact_message_view  # ← Nom exact de la fonction ci-dessus
+
+app_name = 'contact'
 
 urlpatterns = [
-    path('contact/', ContactMessageView.as_view(), name='contact'),
+    # Endpoint pour le formulaire de contact
+    path('contact/', contact_message_view, name='contact_message'),
 ]

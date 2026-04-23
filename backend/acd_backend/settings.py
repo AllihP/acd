@@ -120,3 +120,12 @@ CORS_ALLOW_CREDENTIALS = True
 # PARAMÈTRES PAR DÉFAUT
 # =============================================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Pour envoyer les emails depuis Render (avec SendGrid, Mailgun, etc.)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.sendgrid.net')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@acd-fqjq.onrender.com')
