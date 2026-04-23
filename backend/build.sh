@@ -1,29 +1,32 @@
 #!/usr/bin/env bash
-# Exit on error
+# Arrêt immédiat en cas d'erreur
 set -o errexit
+
+# Définition du chemin de la racine du projet (un niveau au dessus de backend/)
+ROOT_DIR=$(dirname "$(cd "$(dirname "$0")" && pwd)")
 
 echo "🚀 Lancement du build complet ACD..."
 
 # --- PARTIE FRONTEND ---
 echo "📦 [1/4] Build du Frontend React..."
-cd ../frontend
+cd "$ROOT_DIR/frontend"
 npm install
-# Correction impérative des droits pour Vite sur Render
+# Correction des permissions pour Vite
 chmod +x node_modules/.bin/vite
 npm run build
-cd ../backend
 
 # --- PARTIE BACKEND ---
 echo "🐍 [2/4] Installation des dépendances Python..."
+cd "$ROOT_DIR/backend"
 pip install --upgrade pip
 pip install -r requirements.txt
 
 echo "📂 [3/4] Collecte des fichiers statiques et migrations..."
-# Cette commande va copier les fichiers du dossier frontend/dist vers backend/staticfiles
+# Rassemble React + Django Admin dans le dossier staticfiles
 python manage.py collectstatic --no-input
 python manage.py migrate
 
-# --- OPTIONNEL : SUPERUSER ---
+# --- SUPERUSER ---
 echo "👤 [4/4] Vérification du compte administrateur..."
 if [ "$DJANGO_SUPERUSER_USERNAME" ]; then
   python manage.py createsuperuser \
