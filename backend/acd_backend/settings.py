@@ -3,23 +3,23 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 
-# 1. Chemins de base
+# Chemins de base
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 2. Sécurité (Variables d'environnement sur Render)
+# --- SÉCURITÉ ---
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='acd-fqjq.onrender.com,localhost,127.0.0.1').split(',')
 
-# 3. Applications
+# --- APPLICATIONS (Ordre critique pour Unfold) ---
 INSTALLED_APPS = [
-    'unfold',                # Interface Admin moderne (doit être avant django.contrib.admin)
+    'unfold', # Interface moderne
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic', 
+    'whitenoise.runserver_nostatic', # Service statique optimisé
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
@@ -27,10 +27,9 @@ INSTALLED_APPS = [
     'apps.contact',
 ]
 
-# 4. Middleware (L'ordre est vital pour WhiteNoise et CORS)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Juste après SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Indispensable juste ici
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -42,13 +41,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'acd_backend.urls'
 
-# 5. Templates (Pointe vers le build de React)
-REACT_DIST_DIR = os.path.join(BASE_DIR.parent, 'frontend', 'dist')
+# --- TEMPLATES (Point d'entrée React) ---
+REACT_DIST_DIR = BASE_DIR.parent / 'frontend' / 'dist'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [REACT_DIST_DIR], 
+        'DIRS': [REACT_DIST_DIR], # Django lit l'index.html de Vite
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -61,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-# 6. Base de données (Optimisée pour Neon)
+# --- BASE DE DONNÉES (Neon) ---
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
@@ -70,34 +69,21 @@ DATABASES = {
     )
 }
 
-# 7. Fichiers Statiques et MIME Types
+# --- STATIQUES ET MÉDIAS (FIX MIME TYPE) ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Dossiers où Django cherche les fichiers AVANT collectstatic
 STATICFILES_DIRS = [
-    REACT_DIST_DIR,
+    REACT_DIST_DIR, # Contient le dossier /assets
 ]
 
-# Stockage WhiteNoise (Gère compression + cache + MIME Types CSS/JS)
+# Utilisation du stockage WhiteNoise pour gérer les types MIME CSS/JS
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# 8. Médias (Uploads du Portfolio)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# 9. Sécurité HTTPS (Uniquement en Production)
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    # HSTS pour forcer HTTPS
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-
-# 10. CORS
+# --- CONFIGURATION CORS ---
 CORS_ALLOWED_ORIGINS = [
     "https://acd-fqjq.onrender.com",
     "http://localhost:5173",

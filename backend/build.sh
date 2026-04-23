@@ -1,25 +1,24 @@
 #!/usr/bin/env bash
 set -o errexit
 
-# On monte d'un niveau pour aller dans le frontend
-cd ..
-cd frontend
+# On définit proprement la racine du projet (un niveau au-dessus de ce script)
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+echo "🚀 [1/3] Construction du Frontend React..."
+cd "$PROJECT_ROOT/frontend"
 npm install
 chmod +x node_modules/.bin/vite
-npm run build # Génère le dossier 'dist'
+npm run build 
 
-# On revient dans le dossier backend
-cd ../backend
-
-# On crée manuellement le dossier de destination pour éviter tout bug
+echo "🐍 [2/3] Installation du Backend Django..."
+cd "$PROJECT_ROOT/backend"
+# Création du dossier statique pour éviter toute erreur système
 mkdir -p staticfiles
-
-# SOLUTION RADICALE : On copie physiquement les fichiers de React dans Django
-echo "🚚 Transfert direct des fichiers React..."
-cp -r ../frontend/dist/* ./staticfiles/
-
-# Installation des dépendances Python
 pip install -r requirements.txt
 
-# On lance les migrations (sans collectstatic car on a déjà copié les fichiers)
+echo "📂 [3/3] Fusion et Collecte des fichiers..."
+# On force l'utilisation du module Django installé pour éviter 'Unknown command'
+python -m django collectstatic --no-input --clear
 python manage.py migrate
+
+echo "✅ Build ACD terminé avec succès !"
