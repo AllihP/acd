@@ -79,10 +79,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Dossier source de React (Vite build)
 REACT_DIST_DIR = os.path.join(BASE_DIR.parent, 'frontend', 'dist')
 
-STATICFILES_DIRS = []
-if os.path.exists(REACT_DIST_DIR):
-    STATICFILES_DIRS.append(REACT_DIST_DIR)
-
+STATICFILES_DIRS = [
+    os.path.join(REACT_DIST_DIR, 'assets'), 
+    REACT_DIST_DIR,
+]
 # Gestion du cache et de la compression pour éviter les erreurs MIME
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
