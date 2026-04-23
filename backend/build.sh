@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 set -o errexit
 
-# 1. Build du Frontend
-cd frontend
+ROOT_DIR=$(dirname "$(cd "$(dirname "$0")" && pwd)")
+
+echo "🚀 [1/3] Construction du Frontend..."
+cd "$ROOT_DIR/frontend"
 npm install
 chmod +x node_modules/.bin/vite
 npm run build 
-cd ..
 
-# 2. Préparation Django
-cd backend
+echo "🐍 [2/3] Préparation du Backend..."
+cd "$ROOT_DIR/backend"
 pip install -r requirements.txt
-# Le flag --clear supprime les vieux fichiers index.html erronés
+
+echo "📂 [3/3] Nettoyage et Collecte des Statiques..."
+# Le flag --clear est INDISPENSABLE pour supprimer les vieux fichiers MIME corrompus
 python manage.py collectstatic --no-input --clear
 python manage.py migrate
+
+echo "✅ Build ACD réussi !"
