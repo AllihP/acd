@@ -15,9 +15,7 @@ export default function Footer({ settings }) {
 
   return (
     <footer style={{ background: 'var(--navy)', color: 'rgba(255,255,255,0.7)', paddingTop: '5rem' }}>
-      {/* Top */}
       <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 3rem 4rem', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '3rem' }}>
-        {/* Brand */}
         <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '2rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '1.2rem', letterSpacing: '0.06em' }}>
           ACD
           <p style={{ fontSize: '0.9rem', lineHeight: 1.7, maxWidth: 320, marginBottom: '2rem' }}>{ui.footer_desc}</p>
@@ -30,7 +28,6 @@ export default function Footer({ settings }) {
           </div>
         </div>
 
-        {/* Nav */}
         <div>
           <h4 style={{ color: 'white', fontWeight: 700, fontSize: '0.85rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>{ui.footer_nav}</h4>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -46,7 +43,6 @@ export default function Footer({ settings }) {
           </ul>
         </div>
 
-        {/* Services */}
         <div>
           <h4 style={{ color: 'white', fontWeight: 700, fontSize: '0.85rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>{ui.footer_services}</h4>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -56,7 +52,6 @@ export default function Footer({ settings }) {
           </ul>
         </div>
 
-        {/* Contact */}
         <div>
           <h4 style={{ color: 'white', fontWeight: 700, fontSize: '0.85rem', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>{ui.footer_contact}</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -82,7 +77,6 @@ export default function Footer({ settings }) {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '1.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: 1440, margin: '0 auto' }}>
         <p style={{ fontSize: '0.82rem' }}>{ui.copy}</p>
         <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)' }}>Made with <span style={{ color: 'var(--green)' }}>♥</span> in N'Djamena</p>

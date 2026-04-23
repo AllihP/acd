@@ -94,7 +94,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [REACT_DIST_DIR]
 
-# ✅ Remplace STATICFILES_STORAGE (déprécié)
+# ✅ Remplace STATICFILES_STORAGE (déprécié Django 4.2+)
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",

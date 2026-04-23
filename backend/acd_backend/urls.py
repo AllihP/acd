@@ -17,7 +17,8 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# ⚠️ CATCH-ALL REACT : EXCLUT static/, assets/, api/, admin/ pour éviter les erreurs MIME
+# ⚠️ CATCH-ALL REACT : EXCLUT explicitement static/, assets/, api/, admin/, media/
+# La regex (?!...) est une "negative lookahead" qui empêche la capture des fichiers statiques
 urlpatterns += [
     re_path(r'^(?!static/|media/|api/|admin/|assets/|favicon\.ico).*$', 
             TemplateView.as_view(template_name='index.html')),

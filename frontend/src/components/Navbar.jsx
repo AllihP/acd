@@ -42,7 +42,6 @@ export default function Navbar({ settings }) {
         height: 78, display: 'flex', alignItems: 'center',
         justifyContent: 'space-between', gap: '2rem'
       }}>
-        {/* Logo */}
         <Link to="/" style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: '1.7rem', fontWeight: 700, color: 'var(--navy)',
@@ -51,7 +50,6 @@ export default function Navbar({ settings }) {
           <img src="/logo.png" alt="ACD" style={{ height: 48 }} />
         </Link>
 
-        {/* Desktop Links */}
         <ul style={{ display: 'flex', alignItems: 'center', gap: 0, listStyle: 'none' }} className="nav-links-desktop">
           {links.map(l => (
             <li key={l.to}>
@@ -76,9 +74,7 @@ export default function Navbar({ settings }) {
           ))}
         </ul>
 
-        {/* Right cluster */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.4rem' }}>
-          {/* Phone pill */}
           {settings.phone && (
             <a href={`tel:${settings.phone}`} style={{
               display: 'flex', alignItems: 'center', gap: '0.55rem',
@@ -94,7 +90,6 @@ export default function Navbar({ settings }) {
             </a>
           )}
 
-          {/* Lang switcher */}
           <div style={{
             display: 'flex', alignItems: 'center',
             background: 'var(--cream)', borderRadius: 9999,
@@ -115,7 +110,6 @@ export default function Navbar({ settings }) {
             ))}
           </div>
 
-          {/* Hamburger */}
           <button onClick={() => setMenuOpen(!menuOpen)} style={{
             display: 'none', background: 'none', border: 'none',
             cursor: 'pointer', flexDirection: 'column', gap: '5px', padding: '4px'
@@ -131,7 +125,6 @@ export default function Navbar({ settings }) {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div style={{
           background: 'white', borderTop: '1px solid rgba(10,25,60,0.08)',
