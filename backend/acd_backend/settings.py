@@ -68,14 +68,16 @@ DATABASES = {
 
 # --- STATIQUES ET MÉDIAS (FIX IMAGES) ---
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Dossier dist de React
 REACT_DIST_DIR = BASE_DIR.parent / 'frontend' / 'dist'
 
-STATICFILES_DIRS = []
-if REACT_DIST_DIR.exists():
-    STATICFILES_DIRS.append(REACT_DIST_DIR)
+STATICFILES_DIRS = [
+    # On force Django à regarder directement dans le dossier dist
+    # C'est là que se trouvent l'index.html ET le dossier assets/
+    os.path.join(REACT_DIST_DIR),
+]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
