@@ -23,7 +23,9 @@ ALLOWED_HOSTS = config(
 # APPLICATIONS
 # =============================================================================
 INSTALLED_APPS = [
+    # Interface admin moderne (doit être en premier)
     'unfold',
+    # Django contrib
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,20 +33,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    # Apps tierces
     'rest_framework',
     'corsheaders',
+    # Apps locales
     'apps.core',
     'apps.contact',
 ]
 
 # =============================================================================
-# MIDDLEWARE
+# MIDDLEWARE (Ordre critique)
 # =============================================================================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Juste après SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',       # Avant CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,17 +57,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'acd_backend.urls'
-WSGI_APPLICATION = 'acd_backend.wsgi.application'
+WSGI_APPLICATION = 'acd_backend.wsgi.application'  # ← Requis par Gunicorn
 
 # =============================================================================
-# TEMPLATES
+# TEMPLATES (Point d'entrée React/Vite)
 # =============================================================================
 REACT_DIST_DIR = BASE_DIR.parent / 'frontend' / 'dist'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [REACT_DIST_DIR],  # ← Indispensable pour trouver index.html
+        'DIRS': [REACT_DIST_DIR],  # Django sert l'index.html de Vite
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,24 +81,25 @@ TEMPLATES = [
 ]
 
 # =============================================================================
-# BASE DE DONNÉES (Neon + PgBouncer)
+# BASE DE DONNÉES (Neon PostgreSQL + PgBouncer)
 # =============================================================================
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=0,  # ← 0 requis avec ?pgbouncer=true
-        ssl_require=True
+        conn_max_age=0,              # ← 0 OBLIGATOIRE si DATABASE_URL contient ?pgbouncer=true
+        ssl_require=True,            # ← Neon exige SSL
+        conn_health_checks=True,     # ← Détection des connexions mortes (Render)
     )
 }
 
 # =============================================================================
-# STATIQUES ET MÉDIAS (Django 4.2+ compatible)
+# FICHIERS STATIQUES ET MÉDIAS (Django 4.2+ compatible)
 # =============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [REACT_DIST_DIR]
+STATICFILES_DIRS = [REACT_DIST_DIR]  # Dossier de sortie du build Vite
 
-# ✅ Remplace l'ancien STATICFILES_STORAGE déprécié
+# ✅ Configuration WhiteNoise compatible Django 4.2+ (remplace STATICFILES_STORAGE)
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -108,11 +113,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # =============================================================================
-# CORS
+# CONFIGURATION CORS
 # =============================================================================
 CORS_ALLOWED_ORIGINS = [
     "https://acd-fqjq.onrender.com",
-    "http://localhost:5173",
+    "http://localhost:5173",  # Vite dev server
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -120,12 +125,3 @@ CORS_ALLOW_CREDENTIALS = True
 # PARAMÈTRES PAR DÉFAUT
 # =============================================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Pour envoyer les emails depuis Render (avec SendGrid, Mailgun, etc.)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.sendgrid.net')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@acd-fqjq.onrender.com')
