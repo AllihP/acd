@@ -2,7 +2,7 @@ services:
   # --- BACKEND ---
   - type: web
     name: acd-backend
-    runtime: python
+    env: python
     rootDir: backend
     buildCommand: "./build.sh"
     startCommand: "gunicorn acd_backend.wsgi:application --bind 0.0.0.0:$PORT"
@@ -22,11 +22,10 @@ services:
   # --- FRONTEND ---
   - type: web
     name: acd-frontend
-    runtime: static
+    env: static
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: ./dist
-    plan: free
     envVars:
       - key: VITE_API_URL
         value: "https://acd-backend.onrender.com"
