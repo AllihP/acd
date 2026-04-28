@@ -53,11 +53,11 @@ Message:
             )
 
         # ✅ Option 2 : Sauvegarde en base (décommentez si vous avez un modèle)
-        # from .models import ContactMessage
-        # ContactMessage.objects.create(
-        #     name=name, email=email, phone=phone,
-        #     company=company, service=service, message=message, lang=lang
-        # )
+        from .models import ContactMessage
+        ContactMessage.objects.create(
+            name=name, email=email, phone=phone,
+            company=company, service=service, message=message, lang=lang
+        )
 
         logger.info(f"Contact message received from {email}")
 
