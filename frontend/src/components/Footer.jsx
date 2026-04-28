@@ -3,7 +3,7 @@ import { useLang } from '../context/LangContext'
 
 export default function Footer({ settings }) {
   const { lang, ui } = useLang()
-  const addr = settings[`address_${lang}`] || settings.address_fr || "N'Djamena, Tchad"
+  const addr = settings[`address_${lang}`] || settings.address_fr || "Agence Internationale"
   
   const navLinks = [
     { to: '/', label: ui.nav_home },
@@ -79,7 +79,7 @@ export default function Footer({ settings }) {
 
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '1.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: 1440, margin: '0 auto' }}>
         <p style={{ fontSize: '0.82rem' }}>{ui.copy}</p>
-        <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)' }}>Made with <span style={{ color: 'var(--green)' }}>♥</span> in N'Djamena</p>
+        <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)' }}>Made with <span style={{ color: 'var(--green)' }}>♥</span> Worldwide</p>
       </div>
     </footer>
   )

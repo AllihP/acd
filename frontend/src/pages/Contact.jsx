@@ -57,7 +57,7 @@ function InputField({ label, type='text', value, onChange, error, textarea=false
 
 export default function Contact({ settings }) {
   const { lang, ui } = useLang()
-  const addr = settings[`address_${lang}`] || settings.address_fr || "N'Djamena, Tchad"
+  const addr = settings[`address_${lang}`] || settings.address_fr || "Agence Internationale"
 
   const [form, setForm] = useState({ name:'', email:'', phone:'', company:'', service:'', message:'' })
   const [errors, setErrors] = useState({})

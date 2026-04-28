@@ -36,7 +36,7 @@ export default function APropos({ data }) {
             {t(about,lang,'eyebrow')||ui.nav_about}
           </p>
           <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(2.8rem,4vw,5.5rem)', fontWeight:700, lineHeight:1.05, color:'white', maxWidth:700 }}>
-            {t(about,lang,'title')||"Nés à N'Djamena. Rayonnons en Afrique."}
+            {t(about,lang,'title')||"Une vision africaine. Un rayonnement international."}
           </h1>
         </div>
       </section>
@@ -49,13 +49,7 @@ export default function APropos({ data }) {
             <Fade>
               <div style={{ position:'relative', aspectRatio:'4/5' }}>
                 <div style={{ borderRadius:24, overflow:'hidden', width:'100%', height:'100%', background:'linear-gradient(135deg,var(--navy),var(--blue))', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  {about.image_url
-                    ? <img src={about.image_url} alt="À propos ACD" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
-                    : <div style={{ textAlign:'center', color:'rgba(255,255,255,0.5)' }}>
-                        <i className="fas fa-image" style={{ fontSize:'4rem', marginBottom:'1rem', display:'block' }} />
-                        <span style={{ fontSize:'0.9rem' }}>Ajoutez votre image<br/>depuis l'admin</span>
-                      </div>
-                  }
+                  <img src={'/images/about_fallback.png'} alt="À propos ACD" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
                 </div>
                 {/* Badge */}
                 <div style={{ position:'absolute', bottom:'2rem', right:'-2rem', background:'var(--green)', color:'white', borderRadius:16, padding:'1.5rem 2rem', textAlign:'center', boxShadow:'0 20px 50px rgba(106,171,46,0.4)' }}>
@@ -74,7 +68,7 @@ export default function APropos({ data }) {
               <Fade delay={0.1}>
                 <p className="sec-eyebrow">{t(about,lang,'eyebrow')||'— Notre histoire'}</p>
                 <h2 className="sec-title" style={{ marginBottom:'1.5rem' }}>
-                  {t(about,lang,'title')||"Nés à N'Djamena. Rayonnons en Afrique."}
+                  {t(about,lang,'title')||"Une vision africaine. Un rayonnement international."}
                 </h2>
                 <p style={{ fontSize:'1.05rem', color:'var(--gray)', lineHeight:1.8, marginBottom:'2.5rem' }}>
                   {t(about,lang,'text')||"L'ACD n'est pas une agence ordinaire. Nous sommes un moteur de développement."}

@@ -132,7 +132,7 @@ export default function Accueil({ data }) {
       {/* HERO */}
       <section id="accueil" ref={heroRef} style={{ position:'relative', minHeight:'92vh', background:'var(--navy)', overflow:'hidden', display:'flex', alignItems:'center' }}>
         <div style={{ position:'absolute', top:0, right:0, width:'55%', height:'100%', background:'var(--navy2)', clipPath:'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }} />
-        {hero.bg_image_url && <img src={hero.bg_image_url} alt="" style={{ position:'absolute', top:0, right:0, width:'55%', height:'100%', objectFit:'cover', opacity:0.45, clipPath:'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }} />}
+        <img src={'/images/hero_fallback.png'} alt="" style={{ position:'absolute', top:0, right:0, width:'55%', height:'100%', objectFit:'cover', opacity:0.45, clipPath:'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }} />
         <div style={{ position:'relative', zIndex:2, maxWidth:1440, margin:'0 auto', padding:'0 3rem', width:'100%' }}>
           <div style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', background:'linear-gradient(90deg, rgba(106,171,46,0.2) 0%, rgba(106,171,46,0.05) 100%)', borderLeft:'3px solid var(--green)', color:'var(--green)', padding:'0.5rem 1.2rem', borderRadius:'0 8px 8px 0', fontSize:'0.85rem', fontWeight:800, letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:'2.5rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.2s', boxShadow:'0 4px 15px rgba(0,0,0,0.1)' }}>
             <span style={{ width:8, height:8, background:'var(--green)', borderRadius:'50%', animation:'blink 2s ease-in-out infinite', flexShrink:0, boxShadow:'0 0 10px var(--green)' }} />

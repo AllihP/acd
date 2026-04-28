@@ -18,12 +18,7 @@ function PfCard({ item, lang }) {
       style={{ borderRadius:16, overflow:'hidden', position:'relative', height:300, cursor:'pointer',
         boxShadow: hov ? '0 20px 50px rgba(12,25,49,0.2)' : '0 4px 16px rgba(12,25,49,0.08)',
         transform: hov ? 'translateY(-6px)' : 'none', transition:'all 0.4s' }}>
-      {item.image_url
-        ? <img src={item.image_url} alt={t(item,lang,'title')} style={{ width:'100%', height:'100%', objectFit:'cover', transform:hov?'scale(1.08)':'scale(1)', transition:'transform 0.7s ease' }} />
-        : <div style={{ width:'100%', height:'100%', background:'linear-gradient(135deg,var(--navy),var(--blue))', display:'flex', alignItems:'center', justifyContent:'center' }}>
-            <i className="fas fa-image" style={{ fontSize:'3rem', color:'rgba(255,255,255,0.2)' }} />
-          </div>
-      }
+      <img src={'/images/portfolio_fallback.png'} alt={t(item,lang,'title')} style={{ width:'100%', height:'100%', objectFit:'cover', transform:hov?'scale(1.08)':'scale(1)', transition:'transform 0.7s ease' }} />
       <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,transparent 40%,rgba(12,25,49,0.92) 100%)', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'1.8rem', color:'white', opacity:hov?1:0.7, transition:'opacity 0.4s' }}>
         <span style={{ fontSize:'0.78rem', color:'var(--green)', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'0.4rem' }}>
           {item.category_display || item.category}

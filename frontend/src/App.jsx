@@ -20,7 +20,10 @@ function ScrollToTop() {
 function LoadingScreen({ hide }) {
   return (
     <div className={`loading-screen${hide ? ' hide' : ''}`}>
-      <div style={{ textAlign: 'center' }}>ACD</div>
+      <div style={{ textAlign: 'center' }}>
+        <div className="loader-brand">ACD</div>
+        <div className="loader-bar"><div className="loader-bar-inner"></div></div>
+      </div>
     </div>
   )
 }
