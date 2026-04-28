@@ -73,7 +73,7 @@ export default function Realisations({ data }) {
             {ui.pf_eyebrow}
           </p>
           <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(2.8rem,4vw,5.5rem)', fontWeight:700, lineHeight:1.05, color:'white', maxWidth:700 }}>
-            {lang==='fr'?"Projets qui ont marqué le Tchad":lang==='en'?"Projects that shaped Chad":"مشاريع رسمت معالم تشاد"}
+            {lang==='fr'?"Nos projets réalisés et à venir.":lang==='en'?"Projects that shaped Chad":"مشاريع رسمت معالم تشاد"}
           </h1>
           <p style={{ fontSize:'1rem', color:'rgba(255,255,255,0.55)', marginTop:'1rem', maxWidth:550 }}>
             {lang==='fr'?`${filtered.length} réalisation${filtered.length>1?'s':''} — Découvrez notre savoir-faire`

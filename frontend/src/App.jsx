@@ -49,7 +49,8 @@ export default function App() {
 
   const settings = siteData?.settings || {}
 
-  if (loading) return <LoadingScreen hide={hideLoader} />
+  // Removed loading screen to allow instant rendering
+  // if (loading) return <LoadingScreen hide={hideLoader} />
 
   return (
     <>

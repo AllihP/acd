@@ -2,7 +2,7 @@ import { useLang } from '../context/LangContext'
 
 export default function Topbar({ settings }) {
   const { lang, ui } = useLang()
-  const topbarText = settings[`topbar_${lang}`] || settings.topbar_fr || 'ACD — Agence de Communication'
+  const topbarText = settings[`topbar_${lang}`] || settings.topbar_fr || 'ACD - AGENCE DE COMMUNICATION POUR LE DÉVELOPPEMENT'
 
   return (
     <div style={{
