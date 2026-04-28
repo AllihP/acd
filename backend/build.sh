@@ -2,6 +2,8 @@
 set -o errexit
 set -o pipefail
 
+cd "$(dirname "$0")"
+
 echo "🐍 [1/2] Installation du Backend (Django)..."
 pip install -r requirements.txt --no-cache-dir
 
