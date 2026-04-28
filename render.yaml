@@ -24,7 +24,7 @@ services:
     name: acd-frontend
     env: static
     rootDir: frontend
-    buildCommand: "npm install && npm run build"
+    buildCommand: "npm install && chmod +x node_modules/.bin/vite && npm run build"
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
