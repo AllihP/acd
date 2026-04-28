@@ -19,13 +19,13 @@ ALLOWED_HOSTS = config(
     default='acd-fqjq.onrender.com,localhost,127.0.0.1'
 ).split(',')
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # =============================================================================
 # APPLICATIONS
 # =============================================================================
 INSTALLED_APPS = [
-    # Interface admin moderne (doit être en premier)
     'unfold',
-    # Django contrib
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,22 +33,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    # Apps tierces
     'rest_framework',
     'corsheaders',
-    # Apps locales
     'apps.core',
     'apps.contact',
 ]
 
 # =============================================================================
-# MIDDLEWARE (Ordre critique)
+# MIDDLEWARE
 # =============================================================================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Juste après SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',       # Avant CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -57,17 +55,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'acd_backend.urls'
-WSGI_APPLICATION = 'acd_backend.wsgi.application'  # ← Requis par Gunicorn
+WSGI_APPLICATION = 'acd_backend.wsgi.application'
 
 # =============================================================================
-# TEMPLATES (Point d'entrée React/Vite)
+# TEMPLATES
 # =============================================================================
-REACT_DIST_DIR = BASE_DIR.parent / 'frontend' / 'dist'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [REACT_DIST_DIR],  # Django sert l'index.html de Vite
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,25 +78,35 @@ TEMPLATES = [
 ]
 
 # =============================================================================
-# BASE DE DONNÉES (Neon PostgreSQL + PgBouncer)
+# BASE DE DONNÉES (Local = SQLite, Production = Neon + PgBouncer)
 # =============================================================================
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=0,              # ← 0 OBLIGATOIRE si DATABASE_URL contient ?pgbouncer=true
-        ssl_require=True,            # ← Neon exige SSL
-        conn_health_checks=True,     # ← Détection des connexions mortes (Render)
-    )
-}
+DATABASE_URL = config('DATABASE_URL', default='')
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=0,  # ← 0 obligatoire avec ?pgbouncer=true
+            ssl_require=True,
+            conn_health_checks=True,
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # =============================================================================
-# FICHIERS STATIQUES ET MÉDIAS (Django 4.2+ compatible)
+# STATIQUES ET MÉDIAS (Django 4.2+ compatible)
 # =============================================================================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [REACT_DIST_DIR]  # Dossier de sortie du build Vite
+STATICFILES_DIRS = []
 
-# ✅ Configuration WhiteNoise compatible Django 4.2+ (remplace STATICFILES_STORAGE)
+# ✅ WhiteNoise compatible Django 4.2+
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -113,11 +120,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # =============================================================================
-# CONFIGURATION CORS
+# CORS
 # =============================================================================
 CORS_ALLOWED_ORIGINS = [
+    "https://acd-frontend.onrender.com",
     "https://acd-fqjq.onrender.com",
-    "http://localhost:5173",  # Vite dev server
+    "http://localhost:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
 

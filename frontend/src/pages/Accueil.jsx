@@ -104,6 +104,18 @@ function TestiCard({ testi, lang }) {
 
 const RIBBON = ['Branding','Marketing Digital','Événementiel','Social Media','Audiovisuel','Print','Stratégie','Conseil']
 
+const AGENCY_NAME = {
+  fr: "AGENCE DE COMMUNICATION POUR LE DÉVELOPPEMENT",
+  en: "COMMUNICATION AGENCY FOR DEVELOPMENT",
+  ar: "وكالة الاتصال من أجل التنمية"
+};
+
+const HERO_WORDS = {
+  fr: ["Communication", "Marketing", "Événementiel"],
+  en: ["Communication", "Marketing", "Events"],
+  ar: ["الاتصال", "التسويق", "الفعاليات"]
+};
+
 export default function Accueil({ data }) {
   const { lang, ui } = useLang()
   const hero   = data?.hero         || {}
@@ -112,6 +124,9 @@ export default function Accueil({ data }) {
   const testis = data?.testimonials || []
   const { ref: heroRef, inView: heroInView } = useInView({ threshold:0.3, triggerOnce:true })
 
+  const agencyName = AGENCY_NAME[lang] || AGENCY_NAME.fr;
+  const [w1, w2, w3] = HERO_WORDS[lang] || HERO_WORDS.fr;
+
   return (
     <>
       {/* HERO */}
@@ -119,15 +134,19 @@ export default function Accueil({ data }) {
         <div style={{ position:'absolute', top:0, right:0, width:'55%', height:'100%', background:'var(--navy2)', clipPath:'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }} />
         {hero.bg_image_url && <img src={hero.bg_image_url} alt="" style={{ position:'absolute', top:0, right:0, width:'55%', height:'100%', objectFit:'cover', opacity:0.45, clipPath:'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }} />}
         <div style={{ position:'relative', zIndex:2, maxWidth:1440, margin:'0 auto', padding:'0 3rem', width:'100%' }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', background:'rgba(106,171,46,0.15)', border:'1px solid rgba(106,171,46,0.4)', color:'var(--green)', padding:'0.4rem 1rem', borderRadius:9999, fontSize:'0.82rem', fontWeight:600, letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'2.2rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.2s' }}>
-            <span style={{ width:8, height:8, background:'var(--green)', borderRadius:'50%', animation:'blink 2s ease-in-out infinite', flexShrink:0 }} />
-            {t(hero,lang,'label')||"Agence 360° — N'Djamena, Tchad"}
+          <div style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', background:'linear-gradient(90deg, rgba(106,171,46,0.2) 0%, rgba(106,171,46,0.05) 100%)', borderLeft:'3px solid var(--green)', color:'var(--green)', padding:'0.5rem 1.2rem', borderRadius:'0 8px 8px 0', fontSize:'0.85rem', fontWeight:800, letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:'2.5rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.2s', boxShadow:'0 4px 15px rgba(0,0,0,0.1)' }}>
+            <span style={{ width:8, height:8, background:'var(--green)', borderRadius:'50%', animation:'blink 2s ease-in-out infinite', flexShrink:0, boxShadow:'0 0 10px var(--green)' }} />
+            {agencyName}
           </div>
-          <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(3.4rem,5.5vw,7rem)', fontWeight:700, lineHeight:1, letterSpacing:'-0.02em', color:'white', maxWidth:720, marginBottom:'2.2rem', opacity:heroInView?1:0, transform:heroInView?'translateY(0)':'translateY(30px)', transition:'opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s' }}>
-            {t(hero,lang,'title')||'Communication. Marketing . Evenementiel'}
+          <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(3rem,5.5vw,6.5rem)', fontWeight:700, lineHeight:1.1, letterSpacing:'-0.01em', color:'white', maxWidth:800, marginBottom:'2.2rem', opacity:heroInView?1:0, transform:heroInView?'translateY(0)':'translateY(30px)', transition:'opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s' }}>
+            <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.8)', backgroundImage: 'linear-gradient(45deg, #fff, #f0f0f0)', WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>{w1}</span>
+            <span style={{ color:'var(--gold)', margin:'0 0.4rem' }}>—</span>
+            <span style={{ background:'linear-gradient(120deg, var(--green), #a2e061)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>{w2}</span>
+            <span style={{ color:'var(--gold)', margin:'0 0.4rem' }}>—</span>
+            <span>{w3}</span>
           </h1>
-          <p style={{ fontSize:'1.1rem', color:'rgba(255,255,255,0.65)', maxWidth:500, lineHeight:1.7, marginBottom:'3rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.5s' }}>
-            {t(hero,lang,'subtitle')}
+          <p style={{ fontSize:'1.15rem', color:'rgba(255,255,255,0.75)', maxWidth:600, lineHeight:1.8, marginBottom:'3rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.5s', fontWeight:300 }}>
+            {t(hero,lang,'subtitle') || 'Nous donnons vie à vos idées et propulsons votre marque vers l\'excellence avec des stratégies innovantes et percutantes.'}
           </p>
           <div style={{ display:'flex', gap:'1.2rem', flexWrap:'wrap', alignItems:'center', marginBottom:'5rem', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.65s' }}>
             <Link to="/contact" className="btn-solid">{t(hero,lang,'cta1')||'Contact'} <i className="fas fa-arrow-right" /></Link>

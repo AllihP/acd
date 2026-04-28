@@ -10,7 +10,7 @@ from .models import (
 
 # ── MIXIN Aperçu image ────────────────────────────────────────────────
 class ImagePreviewMixin:
-    @display(description="Aperçu", header=True)
+    @display(description="Aperçu")
     def image_preview(self, obj):
         img = getattr(obj, 'image', None) or getattr(obj, 'bg_image', None) or getattr(obj, 'avatar', None)
         if img:
