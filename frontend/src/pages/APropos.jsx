@@ -42,9 +42,9 @@ export default function APropos({ data }) {
       </section>
 
       {/* Main content */}
-      <section style={{ background:'white', padding:'6rem 3rem' }}>
+      <section className="section" style={{ background:'white' }}>
         <div style={{ maxWidth:1440, margin:'0 auto' }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1.1fr', gap:'6rem', alignItems:'center' }}>
+          <div className="responsive-grid-contact" style={{ alignItems:'center' }}>
             {/* Image */}
             <Fade>
               <div style={{ position:'relative', aspectRatio:'4/5' }}>
@@ -76,7 +76,7 @@ export default function APropos({ data }) {
               </Fade>
 
               {/* Facts grid */}
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem', marginBottom:'2.5rem' }}>
+              <div className="responsive-grid-2" style={{ marginBottom:'2.5rem' }}>
                 {[
                   { lk:'fact1_label', vk:'fact1_value' },
                   { lk:'fact2_label', vk:'fact2_value' },
@@ -101,7 +101,7 @@ export default function APropos({ data }) {
       </section>
 
       {/* Values strip */}
-      <section style={{ background:'var(--cream)', padding:'5rem 3rem' }}>
+      <section className="section" style={{ background:'var(--cream)' }}>
         <div style={{ maxWidth:1440, margin:'0 auto' }}>
           <Fade style={{ textAlign:'center', marginBottom:'3rem' }}>
             <h2 className="sec-title">

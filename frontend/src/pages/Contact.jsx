@@ -111,7 +111,7 @@ export default function Contact({ settings }) {
 
       {/* Content */}
       <section style={{ background:'var(--cream)', padding:'6rem 3rem' }}>
-        <div style={{ maxWidth:1440, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1.5fr', gap:'5rem', alignItems:'start' }}>
+        <div className="responsive-grid-contact" style={{ maxWidth:1440, margin:'0 auto' }}>
 
           {/* Left — infos */}
           <div>
@@ -168,7 +168,7 @@ export default function Contact({ settings }) {
                   <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'1.6rem', fontWeight:700, color:'var(--navy)', marginBottom:'2rem' }}>
                     {lang==='fr'?'Envoyez-nous un message':lang==='en'?'Send Us a Message':'أرسل لنا رسالة'}
                   </h3>
-                  <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1.2rem', marginBottom:'1.2rem' }}>
+                  <div className="responsive-grid-2" style={{ marginBottom:'1.2rem' }}>
                     <InputField label={ui.form_name}    value={form.name}    onChange={set('name')}    error={errors.name} />
                     <InputField label={ui.form_company} value={form.company} onChange={set('company')} />
                     <InputField label={ui.form_phone}   value={form.phone}   onChange={set('phone')}   type="tel" error={errors.phone} />

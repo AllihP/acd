@@ -152,7 +152,7 @@ export default function Accueil({ data }) {
             <Link to="/contact" className="btn-solid">{t(hero,lang,'cta1')||'Contact'} <i className="fas fa-arrow-right" /></Link>
             <Link to="/realisations" className="btn-outline">{t(hero,lang,'cta2')||'Réalisations'} <i className="fas fa-play" style={{ fontSize:'0.75rem' }} /></Link>
           </div>
-          <div style={{ display:'flex', gap:'3rem', paddingTop:'3rem', borderTop:'1px solid rgba(255,255,255,0.1)', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.8s' }}>
+          <div className="responsive-flex-row" style={{ gap:'3rem', paddingTop:'3rem', borderTop:'1px solid rgba(255,255,255,0.1)', opacity:heroInView?1:0, transition:'opacity 0.8s ease 0.8s' }}>
             <StatItem value={hero.stat1_value||120} label={t(hero,lang,'stat1_label')} active={heroInView} />
             <StatItem value={hero.stat2_value||8}   label={t(hero,lang,'stat2_label')} active={heroInView} />
             <StatItem value={hero.stat3_value||98}  label={t(hero,lang,'stat3_label')} active={heroInView} />
@@ -168,7 +168,7 @@ export default function Accueil({ data }) {
 
       {/* SERVICES */}
       {svcs.length > 0 && (
-        <section id="services" style={{ background:'white', padding:'6rem 3rem' }}>
+        <section id="services" className="section" style={{ background:'white' }}>
           <div style={{ maxWidth:1440, margin:'0 auto' }}>
             <Fade style={{ marginBottom:'4rem' }}>
               <p className="sec-eyebrow">{ui.svc_eyebrow}</p>
@@ -184,7 +184,7 @@ export default function Accueil({ data }) {
 
       {/* WHY ACD */}
       {whys.length > 0 && (
-        <section style={{ background:'var(--navy)', padding:'6rem 3rem' }}>
+        <section className="section" style={{ background:'var(--navy)' }}>
           <div style={{ maxWidth:1440, margin:'0 auto' }}>
             <Fade>
               <p className="sec-eyebrow">{ui.why_eyebrow}</p>
@@ -199,7 +199,7 @@ export default function Accueil({ data }) {
 
       {/* TESTIMONIALS */}
       {testis.length > 0 && (
-        <section style={{ background:'var(--cream)', padding:'6rem 3rem' }}>
+        <section className="section" style={{ background:'var(--cream)' }}>
           <div style={{ maxWidth:1440, margin:'0 auto' }}>
             <Fade style={{ textAlign:'center', marginBottom:'4rem' }}>
               <p className="sec-eyebrow">{ui.testi_eyebrow}</p>

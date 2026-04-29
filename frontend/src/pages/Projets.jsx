@@ -80,9 +80,9 @@ export default function Projets({ data }) {
       </section>
 
       {/* Services accordion */}
-      <section style={{ background:'var(--cream)', padding:'6rem 3rem' }}>
+      <section className="section" style={{ background:'var(--cream)' }}>
         <div style={{ maxWidth:1440, margin:'0 auto' }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'3rem', alignItems:'start' }}>
+          <div className="responsive-grid-contact" style={{ gap:'3rem' }}>
             {/* Left: intro */}
             <Fade>
               <div style={{ position:'sticky', top:100 }}>
@@ -96,7 +96,7 @@ export default function Projets({ data }) {
                   :"كل خدمة مصممة لتقديم قيمة قابلة للقياس لمؤسستك."}
                 </p>
                 {/* Stats */}
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem' }}>
+                <div className="responsive-grid-2" style={{ gap:'1rem' }}>
                   {[
                     { n: svcs.length, label: lang==='fr'?'Services':lang==='en'?'Services':'خدمة' },
                     { n: data?.portfolio?.length||0, label: lang==='fr'?'Réalisations':lang==='en'?'Projects':'إنجاز' },
@@ -136,7 +136,7 @@ export default function Projets({ data }) {
       </section>
 
       {/* CTA Banner */}
-      <section style={{ background:'var(--navy)', padding:'5rem 3rem', textAlign:'center' }}>
+      <section className="section" style={{ background:'var(--navy)', textAlign:'center' }}>
         <div style={{ maxWidth:700, margin:'0 auto' }}>
           <Fade>
             <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(2rem,3.5vw,3.5rem)', fontWeight:700, color:'white', marginBottom:'1.2rem', lineHeight:1.1 }}>

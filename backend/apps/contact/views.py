@@ -4,10 +4,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 import logging
 
 logger = logging.getLogger(__name__)
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])  # ← Autorise l'envoi sans authentification
 def contact_message_view(request):
@@ -33,10 +35,11 @@ def contact_message_view(request):
             )
 
         # ✅ Option 1 : Envoi d'email (si configuré)
-        if settings.DEFAULT_FROM_EMAIL:
-            send_mail(
-                subject=f'Nouveau contact depuis ACD ({name})',
-                message=f"""
+        try:
+            if getattr(settings, 'DEFAULT_FROM_EMAIL', None) and settings.DEFAULT_FROM_EMAIL:
+                send_mail(
+                    subject=f'Nouveau contact depuis ACD ({name})',
+                    message=f"""
 Nom: {name}
 Email: {email}
 Téléphone: {phone}
@@ -46,20 +49,29 @@ Langue: {lang}
 
 Message:
 {message}
-                """,
-                from_email=email,
-                recipient_list=[settings.DEFAULT_FROM_EMAIL],
-                fail_silently=True,  # Ne pas bloquer si l'email échoue
-            )
+                    """,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.DEFAULT_FROM_EMAIL],
+                    fail_silently=True,  # Ne pas bloquer si l'email échoue
+                )
+        except Exception as e:
+            logger.warning(f"Failed to send email notification: {str(e)}")
+            # We continue execution to save in database
 
         # ✅ Option 2 : Sauvegarde en base (décommentez si vous avez un modèle)
-        from .models import ContactMessage
-        ContactMessage.objects.create(
-            name=name, email=email, phone=phone,
-            company=company, service=service, message=message, lang=lang
-        )
-
-        logger.info(f"Contact message received from {email}")
+        try:
+            from .models import ContactMessage
+            ContactMessage.objects.create(
+                name=name, email=email, phone=phone,
+                company=company, service=service, message=message, lang=lang
+            )
+            logger.info(f"Contact message received and saved from {email}")
+        except Exception as e:
+            logger.error(f"Failed to save contact message to database: {str(e)}")
+            return Response(
+                {'error': 'Erreur lors de la sauvegarde du message en base de données'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         return Response(
             {'message': 'Message reçu avec succès'},

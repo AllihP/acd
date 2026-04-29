@@ -15,7 +15,7 @@ export default function Footer({ settings }) {
 
   return (
     <footer style={{ background: 'var(--navy)', color: 'rgba(255,255,255,0.7)', paddingTop: '5rem' }}>
-      <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 3rem 4rem', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '3rem' }}>
+      <div className="responsive-grid-footer" style={{ maxWidth: 1440, margin: '0 auto', padding: '0 3rem 4rem' }}>
         <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '2rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '1.2rem', letterSpacing: '0.06em' }}>
           ACD
           <p style={{ fontSize: '0.9rem', lineHeight: 1.7, maxWidth: 320, marginBottom: '2rem' }}>{ui.footer_desc}</p>
@@ -77,7 +77,7 @@ export default function Footer({ settings }) {
         </div>
       </div>
 
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '1.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: 1440, margin: '0 auto' }}>
+      <div className="footer-bottom-flex" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '1.5rem 3rem', maxWidth: 1440, margin: '0 auto' }}>
         <p style={{ fontSize: '0.82rem' }}>{ui.copy}</p>
         <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)' }}>Made with <span style={{ color: 'var(--green)' }}>♥</span> Worldwide</p>
       </div>
