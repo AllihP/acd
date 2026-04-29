@@ -142,6 +142,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://acd-frontend.onrender.com",
     "https://acd-fqjq.onrender.com",
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
